@@ -40,6 +40,12 @@
     <ClCompile Include="GlobalFunction.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QDlgMain.cpp" />
+    <ClCompile Include="LineFinder.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WatershedSegmenter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="OpencvDemo.qrc">
@@ -62,6 +68,12 @@
     </ClInclude>
     <ClInclude Include="GlobalFunction.h" />
     <ClInclude Include="resource.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LineFinder.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WatershedSegmenter.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

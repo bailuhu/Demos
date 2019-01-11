@@ -3,80 +3,12 @@
 #include "QDlgMain.h"
 #include "GlobalFunction.h"
 
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
 
-using namespace std;
-using namespace cv;
-#include "Huawei/dfspottestapi.h"
 
-cv::Point OC_Test_MV_2(QString filePathR, QString filePathW)
-{
-	Mat imgDst, imgGray,imgBlurHor,imgBlurVer,imgBinHor,imgBinVer, imgGrayHor, imgGrayVer;
-	Mat imgSrc = imread(filePathR.toStdString());
-	clock_t startTime, endTime;
-	double costTime;
-	startTime = clock();
-	cvtColor(imgSrc,imgGray,COLOR_RGB2GRAY);
-	int ImgSize[2] = { imgGray.rows, imgGray.cols };
-	int startY = imgGray.rows / 3;
-	int endY = imgGray.rows / 3*2;
-	int startX = imgGray.cols / 3;
-	int endX = imgGray.cols / 3 * 2;
-	imgGrayHor = imgGray(Range(0, ImgSize[0]), Range(startX, endX));
-	imgGrayVer = imgGray(Range(startY, endY), Range(0, ImgSize[1]));
-	GaussianBlur(imgGrayHor, imgBlurHor, Size(51, 1), 25, 0);
-	GaussianBlur(imgGrayVer, imgBlurVer, Size(1, 51), 0, 25);
-	endTime = clock();
-	threshold(imgBlurHor, imgBinHor , 0, 255, CV_THRESH_OTSU);
-	threshold(imgBlurVer, imgBinVer, 0, 255, CV_THRESH_OTSU);
-	double sumY = 0;
-	double sumP = 0;// Sum of pixel gray
-	double sumX = 0;
-	double ocY = 0;
-	double ocX = 0;
-	//%计算质心
-	for (int i = 0; i < ImgSize[0]; i++) 
-	{
-		for (int j=0; j < (endX - startX); j++)
-		{
-			sumY = (i)*imgBinHor.at<uchar>(i, j) + sumY;
-			sumP = imgBinHor.at<uchar>(i, j) + sumP;
-		}
-	}
-	ocY = (sumY / sumP);
-	sumP = 0;
-	for (int i = 0; i < (endY - startY); i++)
-	{
-		for (int j=0; j < ImgSize[1]; j++)
-		{
-			sumX = (j)*imgBinVer.at<uchar>(i, j) + sumX;
-			sumP = imgBinVer.at<uchar>(i, j) + sumP;
-		}
+#include "LineFinder.h"
+#include "WatershedSegmenter.h"
 
-	}
-	ocX = (sumX / sumP);
-
-	costTime = (double)(endTime - startTime) / CLOCKS_PER_SEC;
-	cout << "mask中心坐标为：" << ocX << "     " << ocY << endl;
-	cout << "运行时间为：" << costTime << endl;
-	cv::Point centerPt;//特征点，用以画在图像中    
-	centerPt.x = ocX;//特征点在图像中横坐标    
-	centerPt.y = ocY;//特征点在图像中纵坐标    
-	Scalar clr = Scalar(0, 0, 255);
-	circle(imgSrc, centerPt, 10, clr, -1);
-	line(imgSrc, Point(0, centerPt.y), Point(imgSrc.cols, centerPt.y), clr);
-	line(imgSrc, Point(centerPt.x, 0), Point(centerPt.x, imgSrc.rows), clr);
-	imwrite(filePathW.toStdString(), imgSrc);
-	return centerPt;
-// 	namedWindow("imgSrc", 2);
-// 	imshow("imgSrc", imgSrc);
-// 	namedWindow("imgBinHor", 2);
-// 	imshow("imgBinHor", imgBinHor);
-// 	namedWindow("imgBinVer", 2);
-// 	imshow("imgBinVer", imgBinVer);
-// 	waitKey(0);
-}
+#include "Chapter 08/harrisDetector.h"
 
 
 
@@ -564,170 +496,6 @@ void FindCenteroID(Mat& src, QString filePathW, int& x, int& y)
 	qDebug() << filePathW.toStdString().c_str();
 }
 
-void OC_Test_MV_1(QString filePathR, QString filePathW)
-{
-	// MV OC Test
-	// 6
-	int ocX = 0;
-	int ocY = 0;
-	Mat dstV, dstH, dst;
-	Mat src = imread(filePathR.toStdString());
-	if (src.empty()) 
-	{
-		printf("could not load image...\n");
-		return ;
-	}
-	cvtColor(src, dst, CV_BGR2GRAY);  
-
-
-	// 单项滤波（模糊/平滑）
-	// Horizontal binary
-	Mat Sobel_x = (Mat_<char>(3, 3) <<	-1, 0, 1, \
-										-2, 0, 2, \
-										-1, 0, 1); //Sobel的x,水平方向算子
-// 	Mat Sobel_x = (Mat_<char>(2, 2) << -1,  1, \
-// 									   -1,  1); //Sobel的x,水平方向算子
-	//Sobel_x = Gaussian_kernal(5, 1.0, 1);
-	filter2D(dst, dstH, -1, Sobel_x, Point(-1, -1), 0, 0);
-//	GaussianBlur(dst, dstH, Size(5, 5), 0, BORDER_DEFAULT);  
-//	imshow("Robert_x image", dst);
-	filePathW.replace(".bmp", "robert_x.bmp");
-	imwrite(filePathW.toStdString(), dstH);
-	filePathW.replace("robert_x.bmp", ".bmp");
-
-	
-	filePathW.replace(".bmp", "THRESH_OTSU_h.bmp");
-	//threshold(dstH, dstH, OtsuAlgThreshold(dstH), 255, THRESH_BINARY|CV_THRESH_OTSU);
-	threshold(dstH, dstH, 0, 255, THRESH_BINARY|CV_THRESH_OTSU);
-	//Otsu2Threshold(dstH, dstH);
-	imwrite(filePathW.toStdString(), dstH);
-	qDebug() << filePathW.toStdString().c_str();
- 	filePathW.replace("THRESH_OTSU_h.bmp", ".bmp");
-
-	filePathW.replace(".bmp", "-centerH.bmp");
-	int tempY = 0;
-	FindCenteroID(dstH, filePathW, ocX, tempY);
-	filePathW.replace("-centerH.bmp", ".bmp");
-
-
-// 	Mat dstCannyH;
-// 	filePathW.replace(".bmp", "CannyH.bmp");
-// 	Canny( dstH, dstCannyH, 20, 255, 3, true);//边缘检测
-// 	imwrite(filePathW.toStdString(), dstCannyH);
-// 	qDebug() << filePathW.toStdString().c_str();
-// 	filePathW.replace("CannyH.bmp", ".bmp");
-
-
-	// Vertical binary
-	Mat Sobel_y = (Mat_<char>(3, 3) <<	-1, -2, -1, \
-										 0,  0,  0, \
-										 1,  2,  1); //Sobel的y,垂直方向算子
-// 	Mat Sobel_y = (Mat_<char>(2, 2) << -1, -1, \
-// 										1,  1); //Sobel的y,垂直方向算子
-	//Sobel_y = Gaussian_kernal(5, 1.0, 2);
-	filter2D(dst, dstV, -1, Sobel_y, Point(-1, -1), 0, 0);
-//	GaussianBlur(dst, dstV, Size(5, 5), 0);  
-//	imshow("Robert_y image", dst);
-	filePathW.replace(".bmp", "robert_y.bmp");
-	imwrite(filePathW.toStdString(), dstV);
-	filePathW.replace("robert_y.bmp", ".bmp");
-
-	
-	filePathW.replace(".bmp", "THRESH_OTSU_v.bmp");
-	//threshold(dstH, dstH, OtsuAlgThreshold(dstH), 255, THRESH_BINARY|CV_THRESH_OTSU);
-	threshold(dstH, dstH, 0, 255, THRESH_BINARY|CV_THRESH_OTSU);
-	//Otsu2Threshold(dstV, dstV);
-	imwrite(filePathW.toStdString(), dstV);
-	qDebug() << filePathW.toStdString().c_str();
- 	filePathW.replace("THRESH_OTSU_v.bmp", ".bmp");
-
-	filePathW.replace(".bmp", "-centerV.bmp");
-	int tempX = 0;
-	FindCenteroID(dstH, filePathW, tempX, ocY);
-	filePathW.replace("-centerV.bmp", ".bmp");
-
-	qDebug() << ocX;
-	qDebug() << ocY;
-
-// 	Mat dstCannyV;
-// 	filePathW.replace(".bmp", "CannyV.bmp");
-// 	Canny( dstV, dstCannyV, 20, 255, 3, true);//边缘检测
-// 	imwrite(filePathW.toStdString(), dstCannyV);
-// 	qDebug() << filePathW.toStdString().c_str();
-// 	filePathW.replace("CannyV.bmp", ".bmp");
-
-
-	
-	
-		
-}
-void OC_Test_HW_2(QString filePathR, QString filePathW)
-{
-	// 6
-	int ocX = 0;
-	int ocY = 0;
-	int height = 0;
-	int width = 0;
-
-	Mat src = imread(filePathR.toStdString());
-	// 2456 x 2054
-	// 中心块 160x230 pixel
-	height = src.rows;
-	width = src.cols;
-	{
-		Mat dst;  
-		cvtColor(src, dst, CV_BGR2GRAY);  
-		vector<vector<Point> > contours;//contours的类型，双重的vector
-		vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
-		GaussianBlur(dst, dst, Size(81, 81), 40, 40);
-// 		GaussianBlur(dst, dst, Size(5, 5), 0);
-//  	adaptiveThreshold(dst, dst, 255, THRESH_BINARY, 0, 3, 0.5);
-		threshold(dst, dst, 30, 255, THRESH_BINARY);
-// 		threshold(dst, dst , 0, 255, CV_THRESH_OTSU);
-// 		imwrite(filePathW.toStdString(), dst);
-// 		qDebug() << filePathW.toStdString().c_str();
-		findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
-		/// 计算矩  
-		vector<Moments> mu(contours.size());  
-		for (int i = 0; i < contours.size(); i++)  
-		{  
-			mu[i] = moments(contours[i], false);  
-		}
-		///  计算中心矩:  
-		vector<Point2f> mc(contours.size());  
-		for (int i = 0; i < contours.size(); i++)  
-		{  
-			mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);  
-		}  
-		/// 绘制轮廓
-		double area = 0;
-		double maxArea = 0;
-		int index = 0;
-		for (int i = 0; i < mc.size(); i++)
-		{
-			Scalar color = Scalar(255);
-			drawContours(src, contours, i, color, 2, 8, hierarchy, 0, Point());
-			area = contourArea(contours[i]);
-			if (area > maxArea)
-			{
-				index = i;
-			}
-		}
-		// Draw center and rectangle
-		Scalar color = Scalar(0,255,0);
-		//circle(src, mc[index], 1, color, -1, 8, 0);
-		ocX = mc[index].x;
-		ocY = mc[index].y;
-		int ew = 20; // edge width
-		int eh = 30; // edge width
-		rectangle(src, Point(ocX-ew, ocY-eh), Point(ocX+ew, ocY+eh), color);
-		rectangle(src, Point(ocX-1000, ocY-800), Point(ocX+1000, ocY+800), color);
-
-		imwrite(filePathW.toStdString(), src);
-		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;;
-	}
-	return ;
-}
 
 void OC_Test_HW_3(QString filePathR, QString filePathW)
 {
@@ -876,7 +644,6 @@ void OC_Test_HW_3(QString filePathR, QString filePathW)
 
 void OC_Test_HW_4(QString filePathR, QString filePathW)
 {
-	// 6
 	int ocX = 0;
 	int ocY = 0;
 	int height = 0;
@@ -931,16 +698,17 @@ void OC_Test_HW_4(QString filePathR, QString filePathW)
 // 		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;;
 	}
 
-	int w = 200; // edge width
+	int w = 100; // edge width
 	int h = 200; // edge width
 	Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
 	{
 		Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
 		Mat dstRoi;
 		cvtColor(srcRoi, dstRoi, CV_BGR2GRAY);  
-		GaussianBlur(dstRoi, dstRoi, Size(81, 81), 40, 40);
+		GaussianBlur(dstRoi, dstRoi, Size(1, 81), 0, 40);
+	//	imwrite(filePathW.toStdString(), dstRoi);
 		threshold(dstRoi, dstRoi, 0, 255, CV_THRESH_OTSU);
-		imwrite(filePathW.toStdString(), dstRoi);
+		
 		double sumP = 0;// Sum of pixel gray
 		double sumY = 0;
 		// Calc weight center
@@ -956,33 +724,34 @@ void OC_Test_HW_4(QString filePathR, QString filePathW)
 		ocY += tempY - h;
 	}
 
-// 	w = 200; // edge width
-// 	h = 100; // edge width
-// 	{
-// 		Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
-// 		Mat dstRoi;
-// 		cvtColor(srcRoi, dstRoi, CV_BGR2GRAY);  
-// 		GaussianBlur(dstRoi, dstRoi, Size(51, 1), 25, 0);
-// 		threshold(dstRoi, dstRoi, 0, 255, CV_THRESH_OTSU);
-// 		imwrite(filePathW.toStdString(), dstRoi);
-// 		double sumP = 0;// Sum of pixel gray
-// 		double sumX = 0;
-// 		for (int i = 0; i < dstRoi.rows; i++)
-// 		{
-// 			for (int j=0; j < dstRoi.cols; j++)
-// 			{
-// 				sumX = (j)*dstRoi.at<uchar>(i, j) + sumX;
-// 				sumP = dstRoi.at<uchar>(i, j) + sumP;
-// 			}
-// 
-// 		}
-// 		ocX = (sumX / sumP);
-// 	}
+	w = 200; // edge width
+	h = 100; // edge width
+	{
+		Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
+		Mat dstRoi;
+		cvtColor(srcRoi, dstRoi, CV_BGR2GRAY);  
+		GaussianBlur(dstRoi, dstRoi, Size(81, 1), 40, 0);
+		threshold(dstRoi, dstRoi, 0, 255, CV_THRESH_OTSU);
+		imwrite(filePathW.toStdString(), dstRoi);
+		double sumP = 0;// Sum of pixel gray
+		double sumX = 0;
+		for (int i = 0; i < dstRoi.rows; i++)
+		{
+			for (int j=0; j < dstRoi.cols; j++)
+			{
+				sumX = (j)*dstRoi.at<uchar>(i, j) + sumX;
+				sumP = dstRoi.at<uchar>(i, j) + sumP;
+			}
+
+		}
+		double tempX = (sumX / sumP);
+		ocX += tempX - w;
+	}
 
 	Scalar color = Scalar(0, 255);
 	rectangle(src, Point(ocX-125, ocY-100), Point(ocX+125, ocY+100), color);
 	circle(src, Point(ocX, ocY) , 5, color, -1);
-// 	imwrite(filePathW.toStdString(), src);
+ 	imwrite(filePathW.toStdString(), src);
  	qDebug() << filePathW.toStdString().c_str() << ocX << ocY;
 
 	return ;
@@ -1202,102 +971,83 @@ void LineDetect_NoName(QString filePathR, QString filePathW)
 }
 
 
-void EdgeDetect_Canny(QString filePathR, QString filePathW)
+void LineDetect_HT(QString filePathR, QString filePathW)
 {
 
 	//载入图像，转换为灰度图  
 	Mat src = imread(filePathR.toStdString()); 
 	Mat dst;
 	//为canny边缘图像申请空间，1表示单通道灰度图
+//	Canny(src, dst, 128, 255);
 	cvtColor(src, dst, CV_BGR2GRAY);
-	Canny( dst, dst, 20, 255, 3, true);//边缘检测
-// 	namedWindow( "src", CV_WINDOW_AUTOSIZE);  
-// 	namedWindow( "canny", CV_WINDOW_AUTOSIZE);  
-// 	imshow( "src", src );  
-// 	imshow( "canny", dst );
-	imwrite(filePathW.toStdString(), dst);
+	threshold(dst, dst, 60, 255, THRESH_BINARY_INV);
+	
+//	cvtColor(src, dst, CV_BGR2GRAY);
+	LineFinder lf;
+	lf.setLineLengthAndGap(50, 5);
+	lf.setMinVote(80);
+	vector<Vec4i> lines = lf.findLines(dst);
+	lf.drawDetectLines(src);
+	imwrite(filePathW.toStdString(), src);
 	qDebug() << filePathW.toStdString().c_str();
 }
 
-int EdgeDetect_Sobel(QString filePathR, QString filePathW)
+void Mophology_WaterShed(QString filePathR, QString filePathW)
 {
-	Mat src, dst, src_gray;
-	Mat grad;
-	int scale = 1;
-	int delta = 0;
-	int ddepth = CV_16S;
-	int c;
-	/// Load an image
-	src = imread(filePathR.toStdString());
-	if( !src.data )
-	{ return -1; }
-	GaussianBlur( src, src, Size(3,3), 0, 0, BORDER_DEFAULT );
-	/// Convert it to gray
-	cvtColor( src, src_gray, CV_RGB2GRAY );
-	/// Create window
-	/// Generate grad_x and grad_y
-	Mat grad_x, grad_y;
-	Mat abs_grad_x, abs_grad_y;
-	/// Gradient X
-	//Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
-	Sobel( src_gray, grad_x, ddepth, 1, 0, 3, scale, delta, BORDER_DEFAULT );
-	convertScaleAbs( grad_x, abs_grad_x );
-	/// Gradient Y
-	//Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
-	Sobel( src_gray, grad_y, ddepth, 0, 1, 3, scale, delta, BORDER_DEFAULT );
-	convertScaleAbs( grad_y, abs_grad_y );
-	/// Total Gradient (approximate)
-	addWeighted( abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad );
-	//imshow( window_name, grad );
-	imwrite(filePathW.toStdString(), grad);
-	qDebug() << filePathW.toStdString().c_str();
-	return 0;
-} 
+	Mat src = imread(filePathR.toStdString());
+	Mat dst;
+	cvtColor(src, dst, CV_BGR2GRAY);
+	
+//	medianBlur(dst, dst, 7);
+	GaussianBlur(dst, dst, Size(51, 51), 25, 25);
+	
+	threshold(dst, dst, 20, 255, THRESH_BINARY);
+	imwrite(filePathW.toStdString(), dst);
 
+	vector<vector<Point> > contours;//contours的类型，双重的vector
+	vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
+	findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+	/// 计算矩  
+	vector<Moments> mu(contours.size());  
+	for (int i = 0; i < contours.size(); i++)  
+	{  
+		mu[i] = moments(contours[i], false);
+	}  
+	///  计算中心矩:  
+	vector<Point2f> mc(contours.size());  
+	for (int i = 0; i < contours.size(); i++)  
+	{  
+		mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);
 
-int main(int argc, char *argv[])
-{
-	vector<QString> vFilePath;
-	QString filePathW;
-	TraverseDir("F:/Test", "bmp", vFilePath);
-	qDebug() << "Traverse directory files done.";
-
-	double x = 0;
-	double y = 0;
-	for (vector<QString>::iterator it = vFilePath.begin(); it != vFilePath.end(); ++it)
+	}
+	/// 绘制轮廓
+	for (int i = 0; i < mc.size(); i++)
 	{
-		QString filePathR = *it;
-		QString filePathW = filePathR;
-		filePathW.replace("F:/Test", "F:/Test_Result");
-		QString dirPath = filePathW.left(filePathW.lastIndexOf("/"));
-		CreateDir(dirPath);
-	// 	EdgeDetect_Sobel(filePathR, filePathW);
-	//	OC_Test_MV_1(filePathR, filePathW);
-	//	OC_Test_MV_2(filePathR, filePathW);
-	//	Point centerPt1 = OC_Test_MV_2(filePathR, filePathW);
-	// 	HuaweiDllCall(filePathR, filePathW);
-	//	OC_Test_HW_2(filePathR, filePathW);
-	//	OC_Test_HW_3(filePathR, filePathW);
-		OC_Test_HW_4(filePathR, filePathW);
-	//	OC_Test_HW_1(filePathR, filePathW);
-	// 	EdgeDetect_Canny(filePathR, filePathW);
-	// 	MophologyOpenClose(filePathR, filePathW);
-	//	LineDetect_NoName(filePathR, filePathW);
+		Scalar color = Scalar(255);
+		drawContours(src, contours, i, color, 2, 8, hierarchy, 0, Point());
 	}
 
-
-	return 0;
-
-
-	QApplication a(argc, argv);		
-	a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
-
-	QDlgMain dlg;
-	dlg.show();
-	a.exec();
-
-	return 0;
+//	imwrite(filePathW.toStdString(), src);
+	qDebug() << filePathW.toStdString().c_str();
 }
+
+void HarrisDectect_1(QString filePathR, QString filePathW)
+{
+	Mat src = imread(filePathR.toStdString());
+	Mat dst;
+	cvtColor(src, dst, CV_BGR2GRAY);
+	HarrisDetector harris;
+	harris.detect(dst);
+	vector<Point> vPt;
+	harris.getCorners(vPt, 0.01);
+	harris.drawOnImage(dst, vPt);
+
+	imwrite(filePathW.toStdString(), dst);
+	qDebug() << filePathW.toStdString().c_str();
+
+}
+
+
 
 
 
@@ -1396,3 +1146,57 @@ int main(int argc, char *argv[])
 // 	return 0;
 
 
+
+int main(int argc, char *argv[])
+{
+
+	vector<QString> vFilePath;
+	QString filePathW;
+	QString test = "E:/Test";
+	QString testResult = "E:/Test_Result";
+	TraverseDir(test, "bmp", vFilePath);
+	qDebug() << "Traverse directory files done.";
+
+	double x = 0;
+	double y = 0;
+	for (vector<QString>::iterator it = vFilePath.begin(); it != vFilePath.end(); ++it)
+	{
+		QString filePathR = *it;
+		QString filePathW = filePathR;
+		filePathW.replace(test, testResult);
+
+		QString dirPath = filePathW.left(filePathW.lastIndexOf("/"));
+		CreateDir(dirPath);
+
+// 		EdgeDetect_Sobel(filePathR, filePathW);
+// 		EdgeDetect_Canny(filePathR, filePathW);
+//		Find_HW_X(filePathR, filePathW);
+// 		OC_Test_MV_3(filePathR, filePathW);
+// 		OC_Test_MV_2(filePathR, filePathW);
+// 		Find_HW_Y(filePathR, filePathW);
+ 		Find_HW_XY(filePathR, filePathW);
+// 		OC_Test_HW_3(filePathR, filePathW);
+// 		OC_Test_HW_4(filePathR, filePathW);
+// 		OC_Test_HW_1(filePathR, filePathW);
+
+// 		MophologyOpenClose(filePathR, filePathW);
+// 		LineDetect_NoName(filePathR, filePathW);
+// 		LineDetect_HT(filePathR, filePathW);
+//		Mophology_WaterShed(filePathR, filePathW);
+
+//		HarrisDectect_1(filePathR, filePathW);
+	}
+
+
+	return 0;
+
+
+	QApplication a(argc, argv);		
+	a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
+
+	QDlgMain dlg;
+	dlg.show();
+	a.exec();
+
+	return 0;
+}

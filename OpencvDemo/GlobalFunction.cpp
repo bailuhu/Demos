@@ -64,6 +64,50 @@ bool CreateDir(QString dirPath)
 }
 
 
+void goodFeaturesToTrack_Demo(QString filePathR, QString filePathW)
+{
+	//载入图像，转换为灰度图  
+	Mat src = imread(filePathR.toStdString()); 
+	Mat dst;
+	//为canny边缘图像申请空间，1表示单通道灰度图
+	cvtColor(src, dst, CV_BGR2GRAY);
+
+	//初始化 Shi-Tomasi algorithm的一些参数
+	vector<Point2f> corners;
+	goodFeaturesToTrack(dst, corners, 8, 0.01, 10, Mat(), 78, false, 0.04);
+// 	for (int i = 0; i < corners.size(); i++)
+// 	{
+// 		circle(src, corners[i], 1, Scalar(0, 0, 255), 1, 8, 0);
+// 	}
+
+	//精度或最大迭代数目，其中任意一个达到  迭代次数40，精度0.001
+	TermCriteria criteria = TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 40, 0.001);
+	cornerSubPix(dst, corners, cv::Size(5, 5), cv::Size(-1, -1), criteria);
+
+	//将检测到的亚像素角点绘制到原图上  
+	for (int i = 0; i < corners.size(); i++)  
+	{  
+		Point2f pt1, pt2;
+		pt1.x = corners[i].x-5;
+		pt1.y = corners[i].y;
+
+		pt2.x = corners[i].x+5;
+		pt2.y = corners[i].y;
+		line(src, pt1, pt2, Scalar(0, 0, 255));
+
+		pt1.x = corners[i].x;
+		pt1.y = corners[i].y-5;
+
+		pt2.x = corners[i].x;
+		pt2.y = corners[i].y+5;
+		line(src, pt1, pt2, Scalar(0, 0, 255));
+	}  
+
+	filePathW.replace(".bmp", "canny.bmp");
+	imwrite(filePathW.toStdString(), src);
+	qDebug() << filePathW.toStdString().c_str();
+
+}
 
 
 // Image Process
@@ -76,11 +120,13 @@ void EdgeDetect_Canny(QString filePathR, QString filePathW)
 	Mat dst;
 	//为canny边缘图像申请空间，1表示单通道灰度图
 	cvtColor(src, dst, CV_BGR2GRAY);
-	Canny( dst, dst, 20, 255, 5, true);//边缘检测
+	Canny( dst, dst, 100, 255, 5, true);//边缘检测
 
+	filePathW.replace(".bmp", "canny.bmp");
 	imwrite(filePathW.toStdString(), dst);
 	qDebug() << filePathW.toStdString().c_str();
 }
+
 
 int EdgeDetect_Sobel(QString filePathR, QString filePathW)
 {

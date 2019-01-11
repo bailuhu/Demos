@@ -66,9 +66,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <ExecutablePath>D:\Program\opencv\build\x64\vc11\bin;.\CameraHKWS\bin;E:\Program Files\Visual Leak Detector\bin\Win64;$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>D:\Program\opencv\build\x64\vc11\lib;E:\Program Files\Visual Leak Detector\lib\Win64;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\GTS_SDK;.\Lib\Usb2Uis;.\Lib\CameraHKWS\lib\x64;.\Lib\LibraryHalcon\lib\x64-win64;$(LibraryPath)</LibraryPath>
-    <IncludePath>E:\Program Files\Visual Leak Detector\include;D:\Program\opencv\build\include\opencv2;D:\Program\opencv\build\include\opencv;D:\Program\opencv\build\include;.\CameraHKWS\include;.\CameraHKWS\include\GenICam;.\CameraHKWS\include\GenICam\GenApi;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\AAAlgo;.\AAControl;.\BuildStd;.\Commun;.\GeneratedFiles;.\Glue;.\ImageAcqusition;.\MachAuthorityManage;.\MachControl;.\MainUI;.\SPC;.\VCMDriver;.\Visual;.\VisualAlgo;.\VisualCamera;.\public;.\public\xml;.\sysFile;.\USB2I2CForVCM;.\SoftWareLock;.\Lib;$(IncludePath)</IncludePath>
+    <ExecutablePath>E:\opencv\build\x64\vc11\bin;.\CameraHKWS\bin;E:\Program Files\Visual Leak Detector\bin\Win64;$(ExecutablePath)</ExecutablePath>
+    <LibraryPath>E:\opencv\build\x64\vc11\lib;E:\Program Files\Visual Leak Detector\lib\Win64;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\GTS_SDK;.\Lib\Usb2Uis;.\Lib\CameraHKWS\lib\x64;.\Lib\LibraryHalcon\lib\x64-win64;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Program Files\Visual Leak Detector\include;E:\opencv\build\include\opencv2;E:\opencv\build\include\opencv;E:\opencv\build\include;.\CameraHKWS\include;.\CameraHKWS\include\GenICam;.\CameraHKWS\include\GenICam\GenApi;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\AAAlgo;.\AAControl;.\BuildStd;.\Commun;.\GeneratedFiles;.\Glue;.\ImageAcqusition;.\MachAuthorityManage;.\MachControl;.\MainUI;.\SPC;.\VCMDriver;.\Visual;.\VisualAlgo;.\VisualCamera;.\public;.\public\xml;.\sysFile;.\USB2I2CForVCM;.\SoftWareLock;.\Lib;$(IncludePath)</IncludePath>
     <EmbedManifest>false</EmbedManifest>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -77,9 +77,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <ExecutablePath>D:\Program\opencv\build\x64\vc11\bin;.\CameraHKWS\bin;E:\Program Files\Visual Leak Detector\bin\Win64;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>E:\Program Files\Visual Leak Detector\include;D:\Program\opencv\build\include\opencv2;D:\Program\opencv\build\include\opencv;D:\Program\opencv\build\include;.\CameraHKWS\include;.\CameraHKWS\include\GenICam;.\CameraHKWS\include\GenICam\GenApi;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\AAAlgo;.\AAControl;.\BuildStd;.\Commun;.\GeneratedFiles;.\Glue;.\ImageAcqusition;.\MachAuthorityManage;.\MachControl;.\MainUI;.\SPC;.\VCMDriver;.\Visual;.\VisualAlgo;.\VisualCamera;.\public;.\public\xml;.\sysFile;.\USB2I2CForVCM;.\SoftWareLock;.\Lib;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Program\opencv\build\x64\vc11\lib;E:\Program Files\Visual Leak Detector\lib\Win64;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\GTS_SDK;.\Lib\Usb2Uis;.\Lib\CameraHKWS\lib\x64;.\Lib\LibraryHalcon\lib\x64-win64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>E:\opencv\build\x64\vc11\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>E:\Program Files\Visual Leak Detector\include;E:\opencv\build\include\opencv2;E:\opencv\build\include\opencv;E:\opencv\build\include;.\CameraHKWS\include;.\CameraHKWS\include\GenICam;.\CameraHKWS\include\GenICam\GenApi;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\AAAlgo;.\AAControl;.\BuildStd;.\Commun;.\GeneratedFiles;.\Glue;.\ImageAcqusition;.\MachAuthorityManage;.\MachControl;.\MainUI;.\SPC;.\VCMDriver;.\Visual;.\VisualAlgo;.\VisualCamera;.\public;.\public\xml;.\sysFile;.\USB2I2CForVCM;.\SoftWareLock;.\Lib;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\opencv\build\x64\vc11\lib;E:\Program Files\Visual Leak Detector\lib\Win64;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\GTS_SDK;.\Lib\Usb2Uis;.\Lib\CameraHKWS\lib\x64;.\Lib\LibraryHalcon\lib\x64-win64;$(LibraryPath)</LibraryPath>
     <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -102,7 +102,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QWT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\QtXml;$(QTDIR)\include\QWT;$(QTDIR)\include\QtANGLE;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64;D:\opencv\build\include;D:\opencv\build\include\opencv;D:\opencv\build\include\opencv2;$(PYLON_GENICAM_ROOT)\library\CPP\include;$(PYLON_ROOT)\include;E:\eigen3;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);D:\Program\opencv\build\include;D:\Program\opencv\build\include\opencv;D:\Program\opencv\build\include\opencv2;.\;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\Usb2Uis;.\Lib\CZTEK_SDK;.\Lib\GTS_SDK;.\Lib\IDS;.\Lib\MV;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\Lib\CameraHKWS\include;.\Lib\CameraHKWS\include\GenICam\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtXml;$(QTDIR)\include\QWT;$(QTDIR)\include\QtANGLE;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64;D:\opencv\build\include;D:\opencv\build\include\opencv;D:\opencv\build\include\opencv2;$(PYLON_GENICAM_ROOT)\library\CPP\include;$(PYLON_ROOT)\include;E:\eigen3;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);E:\opencv\build\include;E:\opencv\build\include\opencv;E:\opencv\build\include\opencv2;.\;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\Usb2Uis;.\Lib\CZTEK_SDK;.\Lib\GTS_SDK;.\Lib\IDS;.\Lib\MV;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\Lib\CameraHKWS\include;.\Lib\CameraHKWS\include\GenICam\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -141,7 +141,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\QtXml;$(QTDIR)\include\QWT;$(QTDIR)\include\QtANGLE;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64;D:\opencv\build\include;D:\opencv\build\include\opencv;D:\opencv\build\include\opencv2;$(PYLON_GENICAM_ROOT)\library\CPP\include;$(PYLON_ROOT)\include;E:\eigen3;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);D:\Program\opencv\build\include;D:\Program\opencv\build\include\opencv;D:\Program\opencv\build\include\opencv2;.\;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\Usb2Uis;.\Lib\CZTEK_SDK;.\Lib\GTS_SDK;.\Lib\IDS;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\Lib\CameraHKWS\include;.\Lib\CameraHKWS\include\GenICam\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtXml;$(QTDIR)\include\QWT;$(QTDIR)\include\QtANGLE;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64;D:\opencv\build\include;D:\opencv\build\include\opencv;D:\opencv\build\include\opencv2;$(PYLON_GENICAM_ROOT)\library\CPP\include;$(PYLON_ROOT)\include;E:\eigen3;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);E:\opencv\build\include;E:\opencv\build\include\opencv;E:\opencv\build\include\opencv2;.\;.Lib;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\Usb2Uis;.\Lib\CZTEK_SDK;.\Lib\GTS_SDK;.\Lib\IDS;.\Lib\LibraryHalcon\include;.\Lib\LibraryHalcon\include\cpp;.\Lib\CameraHKWS\include;.\Lib\CameraHKWS\include\GenICam\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -160,7 +160,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FindShape.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_QDlgMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -186,7 +185,6 @@
     <ClCompile Include="WatershedSegmenter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FindShape.h" />
     <ClInclude Include="GeneratedFiles\resource.h" />
     <ClInclude Include="GeneratedFiles\ui_QDlgMain.h" />
     <ClInclude Include="GlobalFunction.h" />
@@ -202,7 +200,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing QDlgMain.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQWT_DLL "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QWT" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64" "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I$(PYLON_GENICAM_ROOT)\library\CPP\include" "-I$(PYLON_ROOT)\include" "-IE:\eigen3" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\Program\opencv\build\include" "-ID:\Program\opencv\build\include\opencv" "-ID:\Program\opencv\build\include\opencv2" "-I." "-I.\.Lib" "-I.\Lib\CTS_SDK" "-I.\Lib\DTCCM2_SDK" "-I.\Lib\Usb2Uis" "-I.\Lib\CZTEK_SDK" "-I.\Lib\GTS_SDK" "-I.\Lib\IDS" "-I.\Lib\MV" "-I.\Lib\LibraryHalcon\include" "-I.\Lib\LibraryHalcon\include\cpp" "-I.\Lib\CameraHKWS\include" "-I.\Lib\CameraHKWS\include\GenICam"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQWT_DLL "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QWT" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64" "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I$(PYLON_GENICAM_ROOT)\library\CPP\include" "-I$(PYLON_ROOT)\include" "-IE:\eigen3" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\opencv\build\include" "-IE:\opencv\build\include\opencv" "-IE:\opencv\build\include\opencv2" "-I." "-I.\.Lib" "-I.\Lib\CTS_SDK" "-I.\Lib\DTCCM2_SDK" "-I.\Lib\Usb2Uis" "-I.\Lib\CZTEK_SDK" "-I.\Lib\GTS_SDK" "-I.\Lib\IDS" "-I.\Lib\MV" "-I.\Lib\LibraryHalcon\include" "-I.\Lib\LibraryHalcon\include\cpp" "-I.\Lib\CameraHKWS\include" "-I.\Lib\CameraHKWS\include\GenICam"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing QDlgMain.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -210,7 +208,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing QDlgMain.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QWT" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64" "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I$(PYLON_GENICAM_ROOT)\library\CPP\include" "-I$(PYLON_ROOT)\include" "-IE:\eigen3" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-ID:\Program\opencv\build\include" "-ID:\Program\opencv\build\include\opencv" "-ID:\Program\opencv\build\include\opencv2" "-I." "-I.\.Lib" "-I.\Lib\CTS_SDK" "-I.\Lib\DTCCM2_SDK" "-I.\Lib\Usb2Uis" "-I.\Lib\CZTEK_SDK" "-I.\Lib\GTS_SDK" "-I.\Lib\IDS" "-I.\Lib\LibraryHalcon\include" "-I.\Lib\LibraryHalcon\include\cpp" "-I.\Lib\CameraHKWS\include" "-I.\Lib\CameraHKWS\include\GenICam"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_MBCS  "-I$(QTDIR)\include\QtXml" "-I$(QTDIR)\include\QWT" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$C:\Qt\Qt5.2.1\5.2.1\msvc2012_64" "-ID:\opencv\build\include" "-ID:\opencv\build\include\opencv" "-ID:\opencv\build\include\opencv2" "-I$(PYLON_GENICAM_ROOT)\library\CPP\include" "-I$(PYLON_ROOT)\include" "-IE:\eigen3" "-I.\GeneratedFiles" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\opencv\build\include" "-IE:\opencv\build\include\opencv" "-IE:\opencv\build\include\opencv2" "-I." "-I.\.Lib" "-I.\Lib\CTS_SDK" "-I.\Lib\DTCCM2_SDK" "-I.\Lib\Usb2Uis" "-I.\Lib\CZTEK_SDK" "-I.\Lib\GTS_SDK" "-I.\Lib\IDS" "-I.\Lib\LibraryHalcon\include" "-I.\Lib\LibraryHalcon\include\cpp" "-I.\Lib\CameraHKWS\include" "-I.\Lib\CameraHKWS\include\GenICam"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -261,7 +259,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" Qt5Version_x0020_Win32="Qt5" Qt5Version_x0020_x64="$(DefaultQtVersion)" />
+      <UserProperties UicDir=".\GeneratedFiles" MocDir=".\GeneratedFiles\$(ConfigurationName)" MocOptions="" RccDir=".\GeneratedFiles" lupdateOnBuild="0" lupdateOptions="" lreleaseOptions="" Qt5Version_x0020_Win32="Qt5" Qt5Version_x0020_x64="x64" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -10,7 +10,6 @@
 
 #include "LineFinder.h"
 #include "WatershedSegmenter.h"
-#include "FindShape.h"
 
 #include "Chapter 08/harrisDetector.h"
 
@@ -23,6 +22,7 @@ void TraverseDir(QString dirPath, QString filter, vector<QString>& vFilePath);
 bool CreateDir(QString dirPath);
 
 // Image Process
+void goodFeaturesToTrack_Demo(QString filePathR, QString filePathW);
 int EdgeDetect_Sobel(QString filePathR, QString filePathW);
 void EdgeDetect_Canny(QString filePathR, QString filePathW);
 

@@ -7,6 +7,13 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 
+
+#include "LineFinder.h"
+#include "WatershedSegmenter.h"
+#include "FindShape.h"
+
+#include "Chapter 08/harrisDetector.h"
+
 using namespace std;
 using namespace cv;
 
@@ -30,3 +37,5 @@ Point OC_Test_MV_2(QString filePathR, QString filePathW);
 Point OC_Test_MV_4(QString filePathR, QString filePathW);
 
 Point OC_Test_MV_3(QString filePathR, QString filePathW);
+
+Point FindCircle(QString filePathR, QString filePathW);

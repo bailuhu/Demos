@@ -160,6 +160,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FindShape.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_QDlgMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -185,6 +186,7 @@
     <ClCompile Include="WatershedSegmenter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FindShape.h" />
     <ClInclude Include="GeneratedFiles\resource.h" />
     <ClInclude Include="GeneratedFiles\ui_QDlgMain.h" />
     <ClInclude Include="GlobalFunction.h" />

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDlgMain</class>
+ <widget class="QWidget" name="QDlgMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1033</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QGroupBox{
+border-style: solid;
+border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.170455 rgba(188, 157, 225, 255), stop:0.375 rgba(71, 114, 193, 255), stop:0.585227 rgba(32, 34, 130, 255), stop:0.784091 rgba(115, 107, 177, 255));
+border-width:1px;
+}
+QWidget#QDlgMain{
+	background-color: qlineargradient(spread:repeat, x1:0, y1:1, x2:0, y2:0, stop:0.0454545 rgba(229, 236, 254, 255), stop:0.176136 rgba(254, 245, 250, 255), stop:0.3125 rgba(255, 252, 252, 255), stop:0.517045 rgba(242, 238, 254, 255), stop:0.681818 rgba(242, 234, 255, 255), stop:0.75 rgba(230, 240, 255, 255), stop:0.960227 rgba(255, 255, 255, 255));
+
+}</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

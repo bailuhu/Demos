@@ -1,0 +1,31 @@
+<RCC>
+  <qresource>
+    <file>icon_addEnsure.png</file>
+    <file>icon_delEnsure.png</file>
+    <file>icon_warning.png</file>
+    <file>LogBackground.jpg</file>
+    <file>buttonEx.jpg</file>
+    <file>buttonLog.jpg</file>
+    <file>mainUiLogo.jpg</file>
+    <file>helpBtn.jpg</file>
+    <file>AAbegin.png</file>
+    <file>AAstop.png</file>
+    <file>clearSPC.png</file>
+    <file>icon_exitSys.png</file>
+    <file>icon_log.png</file>
+    <file>icon_monitor.png</file>
+    <file>icon_test.png</file>
+    <file>icon_set.png</file>
+    <file>UserMana.jpg</file>
+    <file>UserChange.jpg</file>
+    <file>ChangeGlue.jpg</file>
+    <file>SetList.jpg</file>
+    <file>Exit.jpg</file>
+    <file>bulid.jpg</file>
+    <file>IOCheck.jpg</file>
+    <file>logoIcon.ico</file>
+    <file>icon_checkbox_off.png</file>
+    <file>icon_checkbox_on.png</file>
+
+  </qresource>
+</RCC>

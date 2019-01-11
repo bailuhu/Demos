@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ChipSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  	<!-- 软件系统配置 -->
+  	<WorkFlowID>功能测试2</WorkFlowID><!-- 生产工序编号，如测试1，测试2 -->
+  	<TesterID>09</TesterID>
+	<!-- 测试工站编号
+	01	SMT test	02	SMT HB test	03	FT HB test	04	FT test	05	Key test
+	06	LED test	07	OTP test	08	OQC HB test	09	OQC test
+	 -->
+  	<SessionCheck>false</SessionCheck><!-- 治具编码长度判断 -->
+	<SessionFilter>1000</SessionFilter><!-- 治具编码规则不含流水号的公共部分，不能为\/:*?"<>|-_空格等 -->
+  	<SessionLenth>15</SessionLenth><!-- 治具编码长度 -->
+  	<bSnAutoEn>true</bSnAutoEn><!-- 是否允许勾选自动生成条码勾选框 -->
+	<SNCheck>true</SNCheck><!-- 是否检测模组SN长度,true为检测，false为不检测 -->
+	<UnSNDoubleCheck>false</UnSNDoubleCheck><!-- 不做连续条码重复检查 -->
+  	<SNLenth>19</SNLenth><!-- 模组SN长度 -->
+  	<SNFilter>F9180011</SNFilter><!-- 模组二维条码编码规则不含流水号的公共部分，不能为\/:*?"<>|-_空格等 -->
+
+	<CmdDelay>50</CmdDelay> <!-- 机台动作命令发送到执行延时时间，单位为CmdDelay*10mS  拟放到APP.CONFIG中 -->
+	<nDelayClear>0</nDelayClear><!-- 自动机台延时清除测试信息时间，单位毫秒，为0则不清除 -->
+  	<LogPath>D:</LogPath><!-- 测试日志保存根路径，为空则保存至系统默认"我的文档"路径中 -->
+  	<LogSubPath>0000</LogSubPath><!-- 测试日志保存子路径，为空则无子路径，不得包含中文字符 -->
+	
+  	<WebCsvEn>true</WebCsvEn><!-- 是否写入WEB数据库配置数据 -->
+  	<bWriteLog>false</bWriteLog><!-- 控制是否将程序运行结果写入调试日志，一般情况下为false -->
+
+  	<!------------------------------------------------------------------------------------------>
+  	<ConfigFileName>config_QCT.ecfg</ConfigFileName><!-- 配置文件名称，用于显示提示 -->
+	<NormalizeFile>normalization.txt</NormalizeFile><!--  -->
+  	<ChipCropName>MV</ChipCropName><!-- 芯片供应商名称 -->
+  	<ChipTypeName>MV001</ChipTypeName><!-- 芯片型号 -->
+  	<ChipID>0x00</ChipID><!-- 芯片的ChipID，多组之间使用英文逗号分隔 -->
+  	<PixelsWidth>56</PixelsWidth>
+  	<PixelsHight>192</PixelsHight>
+	
+	<RoiRegion>
+		<Left>0</Left>
+		<Top>0</Top>
+		<Width>10000</Width>
+		<Height>10000</Height><!-- ROI区域设置，不同的摄像头需要修改 -->
+	</RoiRegion>
+  	<bComputeQuality>true</bComputeQuality><!-- 图像质量测试 -->
+	<QualityThreshold>0.8</QualityThreshold><!-- 图像质量测试阈值 -->
+  	<bComputeDefect>true</bComputeDefect><!-- 坏像素点测试 -->
+	<DefectFloor>0</DefectFloor><!-- 坏像素点下限 -->
+  	<DefectLimit>100</DefectLimit><!-- 坏像素点上限 -->
+  	<bComputeEnergy>true</bComputeEnergy><!-- 能量测试 -->
+	<EnergyFloor>65</EnergyFloor><!-- 能量值下限 -->
+  	<EnergyLimit>95</EnergyLimit><!-- 能量值上限 -->	
+  	<bComputeAngle>true</bComputeAngle><!-- 角度测试 -->
+	<AngleFloor>11</AngleFloor><!-- 角度值下限 -->
+  	<AngleLimit>13</AngleLimit><!-- 角度值上限 -->	
+  	<bComputeAnchors>false</bComputeAnchors><!-- Anchers测试（标定？） -->
+	<ScoreFloor>0.9</ScoreFloor><!-- 得分值下限 -->
+	<NewScoreFloor>0.9</NewScoreFloor><!-- 得分值下限 -->
+	<UniformLimit>0.4</UniformLimit><!-- Uniformity平整度上限 -->
+  	<bVendorIDTest>false</bVendorIDTest><!-- 是否进行出厂硬件ID检测 -->
+	<VendorID>0</VendorID>
+
+</ChipSettings>

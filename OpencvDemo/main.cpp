@@ -64,7 +64,7 @@ cv::Point OC_Test_MV_2(QString filePathR, QString filePathW)
 	centerPt.x = ocX;//特征点在图像中横坐标    
 	centerPt.y = ocY;//特征点在图像中纵坐标    
 	Scalar clr = Scalar(0, 0, 255);
-	circle(imgSrc, centerPt, 10, clr, -1);//在图像中画出特征点，2是圆的半径
+	circle(imgSrc, centerPt, 10, clr, -1);
 	line(imgSrc, Point(0, centerPt.y), Point(imgSrc.cols, centerPt.y), clr);
 	line(imgSrc, Point(centerPt.x, 0), Point(centerPt.x, imgSrc.rows), clr);
 	imwrite(filePathW.toStdString(), imgSrc);
@@ -564,7 +564,7 @@ void FindCenteroID(Mat& src, QString filePathW, int& x, int& y)
 	qDebug() << filePathW.toStdString().c_str();
 }
 
-void OC_Test_MV(QString filePathR, QString filePathW)
+void OC_Test_MV_1(QString filePathR, QString filePathW)
 {
 	// MV OC Test
 	// 6
@@ -715,14 +715,276 @@ void OC_Test_HW_2(QString filePathR, QString filePathW)
 		}
 		// Draw center and rectangle
 		Scalar color = Scalar(0,255,0);
-		circle(src, mc[index], 4, color, -1, 8, 0);
+		//circle(src, mc[index], 1, color, -1, 8, 0);
 		ocX = mc[index].x;
 		ocY = mc[index].y;
+		int ew = 20; // edge width
+		int eh = 30; // edge width
+		rectangle(src, Point(ocX-ew, ocY-eh), Point(ocX+ew, ocY+eh), color);
 		rectangle(src, Point(ocX-1000, ocY-800), Point(ocX+1000, ocY+800), color);
 
 		imwrite(filePathW.toStdString(), src);
 		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;;
 	}
+	return ;
+}
+
+void OC_Test_HW_3(QString filePathR, QString filePathW)
+{
+	// 6
+	int ocX = 0;
+	int ocY = 0;
+	int height = 0;
+	int width = 0;
+
+	Mat src = imread(filePathR.toStdString());
+	height = src.rows;
+	width = src.cols;
+	{
+		Mat dst;  
+		cvtColor(src, dst, CV_BGR2GRAY);  
+		GaussianBlur(dst, dst, Size(81, 81), 40, 40);
+		threshold(dst, dst, 30, 255, THRESH_BINARY);
+
+		vector<vector<Point> > contours;//contours的类型，双重的vector
+		vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
+		findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+		/// 计算矩  
+		vector<Moments> mu(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mu[i] = moments(contours[i], false);  
+		}
+		///  计算中心矩:  
+		vector<Point2f> mc(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);  
+		}  
+		/// 绘制轮廓
+		double area = 0;
+		double maxArea = 0;
+		int index = 0;
+		for (int i = 0; i < mc.size(); i++)
+		{
+			Scalar color = Scalar(255);
+			drawContours(src, contours, i, color, 2, 8, hierarchy, 0, Point());
+			area = contourArea(contours[i]);
+			if (area > maxArea)
+			{
+				index = i;
+			}
+		}
+		// Draw center and rectangle
+		Scalar color = Scalar(0,255,0);
+		//circle(src, mc[index], 1, color, -1, 8, 0);
+		ocX = mc[index].x;
+		ocY = mc[index].y;
+//		rectangle(src, Point(ocX-5, ocY-5), Point(ocX+5, ocY+5), color);
+// 		imwrite(filePathW.toStdString(), src);
+// 		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;;
+	}
+	int w = 20; // edge width
+	int h = 20; // edge width
+	{
+		Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
+		Mat dstRoi;
+ 		cvtColor(srcRoi, dstRoi, CV_BGR2GRAY);  
+		/// Reduce the noise so we avoid false circle detection
+		GaussianBlur( dstRoi, dstRoi, Size(3, 3), 1, 1 );
+		threshold(dstRoi, dstRoi, 30, 255, THRESH_BINARY);
+
+		vector<vector<Point> > contours;//contours的类型，双重的vector
+		vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
+		findContours(dstRoi, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+		/// 计算矩  
+		vector<Moments> mu(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mu[i] = moments(contours[i], false);  
+		}
+		///  计算中心矩:  
+		vector<Point2f> mc(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);  
+		}  
+		/// 绘制轮廓
+		double area = 0;
+		double maxArea = 0;
+		int cntX = 0;
+		int cntY = 0;
+		int maxCntX = 0;
+		int maxCntY = 0;
+		vector<float> vDis;
+		for (int i = 0; i < mc.size(); i++)
+		{
+			float startX = mc[i].x;
+			float startY = mc[i].y;
+			
+			area = contourArea(contours[i]);
+			if (area < 10) continue;
+
+// 			cntX = 0;
+// 			for (int j = 0; j < mc.size(); j++)
+// 			{
+// 				float diffX= mc[j].x - startX;
+// 				if (diffX < 1 && diffX > -1)
+// 				{
+// 					cntX++;
+// 				}
+// 			}
+// 			maxCntX = max(cntX, maxCntX);
+// 
+// 			Scalar color = Scalar(255);
+// 			if (cntX >= 11)
+// 			{
+// 				color = Scalar(255);
+// 				drawContours(srcRoi, contours, i, color, 1, 8, hierarchy, 0, Point());
+// 				circle(srcRoi, Point(mc[i].x, mc[i].y) , 1, color, -1);
+// 			}
+//
+// 			cntY = 0;
+// 			for (int j = 0; j < mc.size(); j++)
+// 			{
+// 				int diffY= mc[j].y - startY;
+// 				if (diffY <= 2 && diffY >= -2)
+// 				{
+// 					cntY++;
+// 				}
+// 			}
+// 			maxCntY = max(cntY, maxCntY);
+// 			if (cntY >= maxCntY)
+// 			{
+// 
+// 				color = Scalar(0, 255);
+// 				drawContours(srcRoi, contours, i, color, 1, 8, hierarchy, 0, Point());
+// 
+// 				circle(srcRoi, Point(mc[i].x, mc[i].y) , 1, color, -1);
+// 			}
+
+			qDebug() << area << maxCntX << startX << cntX << "," << startY << cntY;
+		}
+
+
+		imwrite(filePathW.toStdString(), srcRoi);
+		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;
+	}
+	return ;
+}
+
+
+void OC_Test_HW_4(QString filePathR, QString filePathW)
+{
+	// 6
+	int ocX = 0;
+	int ocY = 0;
+	int height = 0;
+	int width = 0;
+
+	Mat src = imread(filePathR.toStdString());
+	height = src.rows;
+	width = src.cols;
+	{
+		Mat dst;  
+		cvtColor(src, dst, CV_BGR2GRAY);  
+		GaussianBlur(dst, dst, Size(81, 81), 40, 40);
+		threshold(dst, dst, 30, 255, THRESH_BINARY);
+
+		vector<vector<Point> > contours;//contours的类型，双重的vector
+		vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
+		findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+		/// 计算矩  
+		vector<Moments> mu(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mu[i] = moments(contours[i], false);  
+		}
+		///  计算中心矩:  
+		vector<Point2f> mc(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);  
+		}  
+		/// 绘制轮廓
+		double area = 0;
+		double maxArea = 0;
+		int index = 0;
+		for (int i = 0; i < mc.size(); i++)
+		{
+			Scalar color = Scalar(255);
+			drawContours(src, contours, i, color, 2, 8, hierarchy, 0, Point());
+			area = contourArea(contours[i]);
+			if (area > maxArea)
+			{
+				index = i;
+			}
+		}
+		// Draw center and rectangle
+		// Draw center and rectangle
+		Scalar color = Scalar(0,255,0);
+		//circle(src, mc[index], 1, color, -1, 8, 0);
+		ocX = mc[index].x;
+		ocY = mc[index].y;
+// 		rectangle(src, Point(ocX-20, ocY-40), Point(ocX+20, ocY+40), color);
+// 		imwrite(filePathW.toStdString(), src);
+// 		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;;
+	}
+
+	int w = 200; // edge width
+	int h = 200; // edge width
+	Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
+	{
+		Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
+		Mat dstRoi;
+		cvtColor(srcRoi, dstRoi, CV_BGR2GRAY);  
+		GaussianBlur(dstRoi, dstRoi, Size(81, 81), 40, 40);
+		threshold(dstRoi, dstRoi, 0, 255, CV_THRESH_OTSU);
+		imwrite(filePathW.toStdString(), dstRoi);
+		double sumP = 0;// Sum of pixel gray
+		double sumY = 0;
+		// Calc weight center
+		for (int i = 0; i < dstRoi.rows; i++) 
+		{
+			for (int j=0; j < dstRoi.cols; j++)
+			{
+				sumY = (i)*dstRoi.at<uchar>(i, j) + sumY;
+				sumP = dstRoi.at<uchar>(i, j) + sumP;
+			}
+		}
+		double tempY = (sumY / sumP);
+		ocY += tempY - h;
+	}
+
+// 	w = 200; // edge width
+// 	h = 100; // edge width
+// 	{
+// 		Mat srcRoi(src, Rect(ocX-w, ocY-h, w*2, h*2));
+// 		Mat dstRoi;
+// 		cvtColor(srcRoi, dstRoi, CV_BGR2GRAY);  
+// 		GaussianBlur(dstRoi, dstRoi, Size(51, 1), 25, 0);
+// 		threshold(dstRoi, dstRoi, 0, 255, CV_THRESH_OTSU);
+// 		imwrite(filePathW.toStdString(), dstRoi);
+// 		double sumP = 0;// Sum of pixel gray
+// 		double sumX = 0;
+// 		for (int i = 0; i < dstRoi.rows; i++)
+// 		{
+// 			for (int j=0; j < dstRoi.cols; j++)
+// 			{
+// 				sumX = (j)*dstRoi.at<uchar>(i, j) + sumX;
+// 				sumP = dstRoi.at<uchar>(i, j) + sumP;
+// 			}
+// 
+// 		}
+// 		ocX = (sumX / sumP);
+// 	}
+
+	Scalar color = Scalar(0, 255);
+	rectangle(src, Point(ocX-125, ocY-100), Point(ocX+125, ocY+100), color);
+	circle(src, Point(ocX, ocY) , 5, color, -1);
+// 	imwrite(filePathW.toStdString(), src);
+ 	qDebug() << filePathW.toStdString().c_str() << ocX << ocY;
+
 	return ;
 }
 
@@ -863,8 +1125,6 @@ bool HuaweiDllCall()
 {
 	char cTemp[MAX_PATH];
 	sprintf_s(cTemp, "E:/xx/x/xNicolas/OpencvDemo/AA_Single/Huawei/Proj_IS.dll");
-
-	//TraverseDir("E:/xx/x/x11", ".bmp");
 
 	HMODULE hdll = LoadLibraryA(cTemp);
 	if (hdll)
@@ -1009,11 +1269,16 @@ int main(int argc, char *argv[])
 		QString filePathR = *it;
 		QString filePathW = filePathR;
 		filePathW.replace("F:/Test", "F:/Test_Result");
+		QString dirPath = filePathW.left(filePathW.lastIndexOf("/"));
+		CreateDir(dirPath);
 	// 	EdgeDetect_Sobel(filePathR, filePathW);
-	//	OC_Test_MV(filePathR, filePathW);
+	//	OC_Test_MV_1(filePathR, filePathW);
+	//	OC_Test_MV_2(filePathR, filePathW);
 	//	Point centerPt1 = OC_Test_MV_2(filePathR, filePathW);
 	// 	HuaweiDllCall(filePathR, filePathW);
-		OC_Test_HW_2(filePathR, filePathW);
+	//	OC_Test_HW_2(filePathR, filePathW);
+	//	OC_Test_HW_3(filePathR, filePathW);
+		OC_Test_HW_4(filePathR, filePathW);
 	//	OC_Test_HW_1(filePathR, filePathW);
 	// 	EdgeDetect_Canny(filePathR, filePathW);
 	// 	MophologyOpenClose(filePathR, filePathW);

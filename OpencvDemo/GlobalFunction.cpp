@@ -26,3 +26,34 @@ void TraverseDir(QString dirPath, QString filter, vector<QString>& vFilePath)
 	}  
 
 }  
+
+bool CreateDir(QString dirPath)
+{
+	
+	QDir dir;
+	if (dir.exists(dirPath) == true)
+	{
+		return true;
+	}
+	else
+	{
+		int index = 2; // È¥µôÅÌ·û
+		do
+		{
+			index = dirPath.indexOf("/", index+1);
+			QString tempPath = dirPath.left(index);
+			if (dir.exists(dirPath) == false)
+			{
+				if (dir.mkdir(tempPath) == true)
+				{
+					qDebug() << "Create Dir:" << tempPath;
+				}
+			}
+		}
+		while (dir.exists(dirPath) == false);
+	}
+
+	
+
+	return true;
+}

@@ -1,6 +1,35 @@
 # Prerequisites
 *.d
 
+# Added by Nicolsas Lee
+# ignore folder
+GeneratedFiles/
+
+# Added by Nicolas Lee
+*.aps
+*.tli
+*.tlh
+*.idb
+*.pdb
+*.ipdb
+*.pdb
+*.db
+*.suo
+*.res
+*.manifest
+*.tlog
+*.log
+*.ipch
+*.idb
+*.ilk
+*.opendb
+*.opensdf
+*.sdf
+*.exp
+*.iobj
+*.lastbuildstate
+*.unsuccessfulbuild
+
 # Compiled Object files
 *.slo
 *.lo

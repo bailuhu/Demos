@@ -61,6 +61,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GlobalFunction.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpencvDemo.rc">

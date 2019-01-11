@@ -187,6 +187,7 @@
     <ClInclude Include="GeneratedFiles\ui_QDlgMain.h" />
     <ClInclude Include="GlobalFunction.h" />
     <ClInclude Include="Huawei\dfspottestapi.h" />
+    <ClInclude Include="resource.h" />
     <CustomBuild Include="QDlgMain.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing QDlgMain.h...</Message>

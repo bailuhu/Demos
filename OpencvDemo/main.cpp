@@ -10,7 +10,7 @@ using namespace std;
 using namespace cv;
 #include "Huawei/dfspottestapi.h"
 
-cv::Point MV_OC_Test_2(QString filePathR, QString filePathW)
+cv::Point OC_Test_MV_2(QString filePathR, QString filePathW)
 {
 	Mat imgDst, imgGray,imgBlurHor,imgBlurVer,imgBinHor,imgBinVer, imgGrayHor, imgGrayVer;
 	Mat imgSrc = imread(filePathR.toStdString());
@@ -564,7 +564,7 @@ void FindCenteroID(Mat& src, QString filePathW, int& x, int& y)
 	qDebug() << filePathW.toStdString().c_str();
 }
 
-void MV_OC_Test(QString filePathR, QString filePathW)
+void OC_Test_MV(QString filePathR, QString filePathW)
 {
 	// MV OC Test
 	// 6
@@ -661,16 +661,13 @@ void MV_OC_Test(QString filePathR, QString filePathW)
 	
 		
 }
-
-void Huawei_OC_Test(QString filePathR, QString filePathW)
+void OC_Test_HW_2(QString filePathR, QString filePathW)
 {
 	// 6
 	int ocX = 0;
 	int ocY = 0;
 	int height = 0;
 	int width = 0;
-	int h = 500;
-	int w = 500;
 
 	Mat src = imread(filePathR.toStdString());
 	// 2456 x 2054
@@ -682,11 +679,74 @@ void Huawei_OC_Test(QString filePathR, QString filePathW)
 		cvtColor(src, dst, CV_BGR2GRAY);  
 		vector<vector<Point> > contours;//contours的类型，双重的vector
 		vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
-// 		Mat element = getStructuringElement(MORPH_RECT, Size(5, 5)); 
-// 		morphologyEx(dst, dst, MORPH_OPEN, element);
+		GaussianBlur(dst, dst, Size(81, 81), 40, 40);
+// 		GaussianBlur(dst, dst, Size(5, 5), 0);
+//  	adaptiveThreshold(dst, dst, 255, THRESH_BINARY, 0, 3, 0.5);
+		threshold(dst, dst, 30, 255, THRESH_BINARY);
+// 		threshold(dst, dst , 0, 255, CV_THRESH_OTSU);
+// 		imwrite(filePathW.toStdString(), dst);
+// 		qDebug() << filePathW.toStdString().c_str();
+		findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+		/// 计算矩  
+		vector<Moments> mu(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mu[i] = moments(contours[i], false);  
+		}
+		///  计算中心矩:  
+		vector<Point2f> mc(contours.size());  
+		for (int i = 0; i < contours.size(); i++)  
+		{  
+			mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);  
+		}  
+		/// 绘制轮廓
+		double area = 0;
+		double maxArea = 0;
+		int index = 0;
+		for (int i = 0; i < mc.size(); i++)
+		{
+			Scalar color = Scalar(255);
+			drawContours(src, contours, i, color, 2, 8, hierarchy, 0, Point());
+			area = contourArea(contours[i]);
+			if (area > maxArea)
+			{
+				index = i;
+			}
+		}
+		// Draw center and rectangle
+		Scalar color = Scalar(0,255,0);
+		circle(src, mc[index], 4, color, -1, 8, 0);
+		ocX = mc[index].x;
+		ocY = mc[index].y;
+		rectangle(src, Point(ocX-1000, ocY-800), Point(ocX+1000, ocY+800), color);
+
+		imwrite(filePathW.toStdString(), src);
+		qDebug() << filePathW.toStdString().c_str() << ocX << ocY;;
+	}
+	return ;
+}
+
+void OC_Test_HW_1(QString filePathR, QString filePathW)
+{
+	// 6
+	int ocX = 0;
+	int ocY = 0;
+	Mat src = imread(filePathR.toStdString());
+	int height = src.rows;
+	int width = src.cols;
+	int w = 500;
+	int h = 500;
+	{
+		Mat dst;  
+		cvtColor(src, dst, CV_BGR2GRAY);  
+		vector<vector<Point> > contours;//contours的类型，双重的vector
+		vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
 		GaussianBlur(dst, dst, Size(5, 5), 0);
-		adaptiveThreshold(dst, dst, 255, THRESH_BINARY, 0, 5, 0.5);
-		//threshold(dst, dst, 20, 255, THRESH_BINARY);
+// 		adaptiveThreshold(dst, dst, 255, THRESH_BINARY, 0, 5, 0.5);
+ 		threshold(dst, dst, 30, 255, THRESH_BINARY);
+//		threshold(dst, dst , 0, 255, CV_THRESH_OTSU);
+// 		imwrite(filePathW.toStdString(), dst);
+// 		qDebug() << filePathW.toStdString().c_str();
 		findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
 		/// 计算矩  
 		vector<Moments> mu(contours.size());  
@@ -771,6 +831,8 @@ void Huawei_OC_Test(QString filePathR, QString filePathW)
 				circle(src, mc[i], 4, color, -1, 8, 0);
 			}
 		}
+		imwrite(filePathW.toStdString(), src);
+		qDebug() << filePathW.toStdString().c_str();
 	}
 }
 
@@ -864,6 +926,22 @@ void MophologyOpenClose(QString filePathR, QString filePathW)
 }
 
 
+void LineDetect_NoName(QString filePathR, QString filePathW)
+{
+
+	//载入图像，转换为灰度图  
+	Mat src = imread(filePathR.toStdString()); 
+	Mat dst;
+	//为canny边缘图像申请空间，1表示单通道灰度图
+	cvtColor(src, dst, CV_BGR2GRAY);
+	/// Reduce the noise so we avoid false circle detection
+	//threshold(dst, dst, 30, 255, THRESH_BINARY);
+	threshold(dst, dst , 0, 255, CV_THRESH_OTSU);
+	imwrite(filePathW.toStdString(), dst);
+	qDebug() << filePathW.toStdString().c_str();
+}
+
+
 void EdgeDetect_Canny(QString filePathR, QString filePathW)
 {
 
@@ -879,9 +957,6 @@ void EdgeDetect_Canny(QString filePathR, QString filePathW)
 // 	imshow( "canny", dst );
 	imwrite(filePathW.toStdString(), dst);
 	qDebug() << filePathW.toStdString().c_str();
-
-	
-
 }
 
 int EdgeDetect_Sobel(QString filePathR, QString filePathW)
@@ -935,12 +1010,14 @@ int main(int argc, char *argv[])
 		QString filePathW = filePathR;
 		filePathW.replace("F:/Test", "F:/Test_Result");
 	// 	EdgeDetect_Sobel(filePathR, filePathW);
-	//	MV_OC_Test(filePathR, filePathW);
-		Point centerPt1 = MV_OC_Test_2(filePathR, filePathW);
+	//	OC_Test_MV(filePathR, filePathW);
+	//	Point centerPt1 = OC_Test_MV_2(filePathR, filePathW);
 	// 	HuaweiDllCall(filePathR, filePathW);
-	//	Huawei_OC_Test(filePathR, filePathW);
+		OC_Test_HW_2(filePathR, filePathW);
+	//	OC_Test_HW_1(filePathR, filePathW);
 	// 	EdgeDetect_Canny(filePathR, filePathW);
 	// 	MophologyOpenClose(filePathR, filePathW);
+	//	LineDetect_NoName(filePathR, filePathW);
 	}
 
 

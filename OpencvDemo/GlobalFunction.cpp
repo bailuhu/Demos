@@ -16,7 +16,7 @@ void TraverseDir(QString dirPath, QString filter, vector<QString>& vFilePath)
 		if(fileInfo.isFile())  
 		{  
 			
-			if (fileInfo.suffix() == filter)
+			if (fileInfo.suffix() == filter || fileInfo.fileName().contains(filter))
 			{
 				qDebug()<< "Find file:" << fileInfo.filePath();
 				vFilePath.push_back(fileInfo.filePath());
@@ -111,6 +111,99 @@ void goodFeaturesToTrack_Demo(QString filePathR, QString filePathW)
 
 
 // Image Process
+
+bool SubStrateImg(QString filePathR1, QString filePathR2, QString filePathW)
+{
+	//载入图像，转换为灰度图  
+	Mat src1 = imread(filePathR1.toStdString());
+	Mat src2 = imread(filePathR2.toStdString());
+	Mat dst = src2 - src1;
+
+
+	filePathW.replace(".bmp", "GlueShap.bmp");
+	imwrite(filePathW.toStdString(), dst);
+	qDebug() << filePathW.toStdString().c_str();
+	return true;
+}
+
+void GrabCutImge(QString filePathR, QString filePathW)
+{	
+	//载入图像，转换为灰度图  
+	Mat src = imread(filePathR.toStdString(), IMREAD_COLOR); 
+	Mat dst;
+	Mat bgModel, fgModel;
+	Rect rect;
+	rect.x = 300;
+	rect.y = 120;
+	rect.width = 800;
+	rect.height = 720;
+	grabCut(src, dst, rect, bgModel, fgModel, 1, cv::GC_INIT_WITH_RECT);
+	compare(dst, cv::GC_PR_FGD, dst, cv::CMP_EQ);   
+
+	//filePathW.replace(".bmp", "GlueShap.bmp");
+	imwrite(filePathW.toStdString(), dst);
+	qDebug() << filePathW.toStdString().c_str();
+}
+
+void EdgeDetect_Contour(QString filePathR, QString filePathW)
+{	
+	int height = 0;
+	int width = 0;
+
+	Mat src = imread(filePathR.toStdString());
+	height = src.rows;
+	width = src.cols;
+	Mat dst;  
+	cvtColor(src, dst, CV_BGR2GRAY);  
+
+	GaussianBlur(dst, dst, Size(3, 3), 3, 0);
+
+	threshold(dst, dst, 30, 255, THRESH_BINARY);
+	//threshold(dst, dst , 0, 255, CV_THRESH_OTSU);
+	// 	imwrite(filePathW.toStdString(), dst);
+	// 	qDebug() << filePathW.toStdString().c_str();
+
+	vector<vector<Point> > contours;//contours的类型，双重的vector
+	vector<Vec4i> hierarchy;//Vec4i是指每一个vector元素中有四个int型数据
+	findContours(dst, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point(0, 0));
+	/// 计算矩  
+	vector<Moments> mu(contours.size());  
+	for (int i = 0; i < contours.size(); i++)  
+	{  
+		mu[i] = moments(contours[i], false);  
+	}
+	///  计算中心矩:  
+	vector<Point2f> mc(contours.size());  
+	for (int i = 0; i < contours.size(); i++)  
+	{  
+		mc[i] = Point2f(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00);  
+	}  
+	/// 绘制轮廓
+	double area = 0;
+	double maxArea = 0;
+	int index = 0;
+	for (int i = 0; i < mc.size(); i++)
+	{
+		Scalar color = Scalar(0,0,255);
+		drawContours(src, contours, i, color, 1, 8, hierarchy, 0, Point());
+// 		area = contourArea(contours[i]);
+// 		if (area > 10000)
+// 		{
+// 			maxArea = area;
+// 			index = i;
+// 
+// 			// Draw center and rectangle
+// 			Scalar color = Scalar(0,255,0);
+// 			circle(src, mc[index], 8, color, -1, 8, 0);
+// 		}
+
+	}
+
+
+	imwrite(filePathW.toStdString(), src);
+	qDebug() << filePathW.toStdString().c_str();
+	cout << src;
+}
 
 void EdgeDetect_Canny(QString filePathR, QString filePathW)
 {

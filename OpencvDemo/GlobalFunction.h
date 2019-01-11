@@ -25,6 +25,9 @@ bool CreateDir(QString dirPath);
 void goodFeaturesToTrack_Demo(QString filePathR, QString filePathW);
 int EdgeDetect_Sobel(QString filePathR, QString filePathW);
 void EdgeDetect_Canny(QString filePathR, QString filePathW);
+void EdgeDetect_Contour(QString filePathR, QString filePathW);
+
+void GrabCutImge(QString filePathR, QString filePathW);
 
 // ’“µΩHW_X
 Point Find_HW_X(QString filePathR, QString filePathW);
@@ -39,3 +42,4 @@ Point OC_Test_MV_4(QString filePathR, QString filePathW);
 Point OC_Test_MV_3(QString filePathR, QString filePathW);
 
 Point FindCircle(QString filePathR, QString filePathW);
+bool SubStrateImg(QString filePathR1, QString filePathR2, QString filePathW);

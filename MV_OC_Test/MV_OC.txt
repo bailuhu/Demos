@@ -1,0 +1,62 @@
+void MvMaskCenter()
+{
+	Mat dstImage, grayImage,imgR,imgC,BwR,BwC, grayImagePart1, grayImagePart2;
+	Mat img = imread("E:/3D project/资料/Image/structured light image/V2/10_camera.bmp");
+	clock_t start, finish ,finish1，finish2，finish3;
+	double totaltime;
+	start = clock();
+	cvtColor(img,grayImage,COLOR_RGB2GRAY);
+	int ImgSize[2] = { grayImage.rows, grayImage.cols };
+	int rowStart = grayImage.rows / 3;
+	int rowEnd = grayImage.rows / 3*2;
+	int colStart = grayImage.cols / 3;
+	int colEnd = grayImage.cols / 3 * 2;
+	grayImagePart1 = grayImage(Range(0, ImgSize[0]), Range(colStart, colEnd));
+	grayImagePart2 = grayImage(Range(rowStart, rowEnd), Range(0, ImgSize[1]));
+	GaussianBlur(grayImagePart1, imgR, Size(81, 1), 25,0);
+	GaussianBlur(grayImagePart2, imgC, Size(1, 81), 0,25);
+	finish = clock();
+	threshold(imgR, BwR , 0, 255, CV_THRESH_OTSU);
+	threshold(imgC, BwC, 0, 255, CV_THRESH_OTSU);
+	double RowOcPart = 0;
+	double OcPart = 0;
+	double ColumnOcPart = 0;
+	double OCRow = 0;
+	double OCColumn = 0;
+	//%计算质心
+	for (int i = 0; i < ImgSize[0]; i++) 
+	{
+		for (int j=0; j < (colEnd - colStart); j++)
+		{
+			RowOcPart = (i)*BwR.at<uchar>(i, j) + RowOcPart;
+			OcPart = BwR.at<uchar>(i, j) + OcPart;
+		}
+	}
+	OCRow = (RowOcPart / OcPart);
+	OcPart = 0;
+	for (int i = 0; i < (rowEnd - rowStart); i++)
+	{
+		for (int j=0; j < ImgSize[1]; j++)
+		{
+			ColumnOcPart = (j)*BwC.at<uchar>(i, j) + ColumnOcPart;
+			OcPart = BwC.at<uchar>(i, j) + OcPart;
+		}
+
+	}
+	OCColumn = (ColumnOcPart / OcPart);
+	
+	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
+	cout << "mask中心坐标为：" << OCColumn << "     " << OCRow << endl;
+	cout << "运行时间为：" << totaltime << endl;
+	cv::Point point;//特征点，用以画在图像中    
+	point.x = OCColumn;//特征点在图像中横坐标    
+	point.y = OCRow;//特征点在图像中纵坐标    
+	circle(img, point, 10, Scalar(0, 0, 255),-1);//在图像中画出特征点，2是圆的半径
+	namedWindow("img", 2);
+	imshow("img", img);
+	namedWindow("BwR", 2);
+	imshow("BwR", BwR);
+	namedWindow("BwC", 2);
+	imshow("BwC", BwC);
+	waitKey(0);
+}

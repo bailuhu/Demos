@@ -10,6 +10,75 @@ using namespace std;
 using namespace cv;
 #include "Huawei/dfspottestapi.h"
 
+cv::Point MV_OC_Test_2(QString filePathR, QString filePathW)
+{
+	Mat imgDst, imgGray,imgBlurHor,imgBlurVer,imgBinHor,imgBinVer, imgGrayHor, imgGrayVer;
+	Mat imgSrc = imread(filePathR.toStdString());
+	clock_t startTime, endTime;
+	double costTime;
+	startTime = clock();
+	cvtColor(imgSrc,imgGray,COLOR_RGB2GRAY);
+	int ImgSize[2] = { imgGray.rows, imgGray.cols };
+	int startY = imgGray.rows / 3;
+	int endY = imgGray.rows / 3*2;
+	int startX = imgGray.cols / 3;
+	int endX = imgGray.cols / 3 * 2;
+	imgGrayHor = imgGray(Range(0, ImgSize[0]), Range(startX, endX));
+	imgGrayVer = imgGray(Range(startY, endY), Range(0, ImgSize[1]));
+	GaussianBlur(imgGrayHor, imgBlurHor, Size(51, 1), 25, 0);
+	GaussianBlur(imgGrayVer, imgBlurVer, Size(1, 51), 0, 25);
+	endTime = clock();
+	threshold(imgBlurHor, imgBinHor , 0, 255, CV_THRESH_OTSU);
+	threshold(imgBlurVer, imgBinVer, 0, 255, CV_THRESH_OTSU);
+	double sumY = 0;
+	double sumP = 0;// Sum of pixel gray
+	double sumX = 0;
+	double ocY = 0;
+	double ocX = 0;
+	//%计算质心
+	for (int i = 0; i < ImgSize[0]; i++) 
+	{
+		for (int j=0; j < (endX - startX); j++)
+		{
+			sumY = (i)*imgBinHor.at<uchar>(i, j) + sumY;
+			sumP = imgBinHor.at<uchar>(i, j) + sumP;
+		}
+	}
+	ocY = (sumY / sumP);
+	sumP = 0;
+	for (int i = 0; i < (endY - startY); i++)
+	{
+		for (int j=0; j < ImgSize[1]; j++)
+		{
+			sumX = (j)*imgBinVer.at<uchar>(i, j) + sumX;
+			sumP = imgBinVer.at<uchar>(i, j) + sumP;
+		}
+
+	}
+	ocX = (sumX / sumP);
+
+	costTime = (double)(endTime - startTime) / CLOCKS_PER_SEC;
+	cout << "mask中心坐标为：" << ocX << "     " << ocY << endl;
+	cout << "运行时间为：" << costTime << endl;
+	cv::Point centerPt;//特征点，用以画在图像中    
+	centerPt.x = ocX;//特征点在图像中横坐标    
+	centerPt.y = ocY;//特征点在图像中纵坐标    
+	Scalar clr = Scalar(0, 0, 255);
+	circle(imgSrc, centerPt, 10, clr, -1);//在图像中画出特征点，2是圆的半径
+	line(imgSrc, Point(0, centerPt.y), Point(imgSrc.cols, centerPt.y), clr);
+	line(imgSrc, Point(centerPt.x, 0), Point(centerPt.x, imgSrc.rows), clr);
+	imwrite(filePathW.toStdString(), imgSrc);
+	return centerPt;
+// 	namedWindow("imgSrc", 2);
+// 	imshow("imgSrc", imgSrc);
+// 	namedWindow("imgBinHor", 2);
+// 	imshow("imgBinHor", imgBinHor);
+// 	namedWindow("imgBinVer", 2);
+// 	imshow("imgBinVer", imgBinVer);
+// 	waitKey(0);
+}
+
+
 
 Mat Gaussian_kernal(int kernel_size, int sigma, int direction = 1)
 {
@@ -855,16 +924,19 @@ int main(int argc, char *argv[])
 {
 	vector<QString> vFilePath;
 	QString filePathW;
-	TraverseDir("E:/Test", "bmp", vFilePath);
+	TraverseDir("F:/Test", "bmp", vFilePath);
 	qDebug() << "Traverse directory files done.";
 
+	double x = 0;
+	double y = 0;
 	for (vector<QString>::iterator it = vFilePath.begin(); it != vFilePath.end(); ++it)
 	{
 		QString filePathR = *it;
 		QString filePathW = filePathR;
-		filePathW.replace("E:/Test", "E:/Test_Result");
+		filePathW.replace("F:/Test", "F:/Test_Result");
 	// 	EdgeDetect_Sobel(filePathR, filePathW);
-		MV_OC_Test(filePathR, filePathW);
+	//	MV_OC_Test(filePathR, filePathW);
+		Point centerPt1 = MV_OC_Test_2(filePathR, filePathW);
 	// 	HuaweiDllCall(filePathR, filePathW);
 	//	Huawei_OC_Test(filePathR, filePathW);
 	// 	EdgeDetect_Canny(filePathR, filePathW);

@@ -153,7 +153,7 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(PYLON_GENICAM_ROOT)\library\CPP\Lib\win64_x64;$(PYLON_ROOT)\lib\x64;$(QTDIR)\include\QtXml;.\Lib;.\Lib\Usb2Uis;.\Lib\CTS_SDK;.\Lib\DTCCM2_SDK;.\Lib\CZTEK_SDK;.\Lib\IDS;.\Lib\LibraryHalcon\lib;.\Lib\CameraHKWS\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;Qt5Xml.lib;opencv_ml2410.lib;opencv_objdetect2410.lib;opencv_ts2410.lib;opencv_video2410.lib;opencv_nonfree2410.lib;opencv_ocl2410.lib;opencv_photo2410.lib;opencv_stitching2410.lib;opencv_superres2410.lib;opencv_videostab2410.lib;opencv_calib3d2410.lib;opencv_contrib2410.lib;opencv_core2410.lib;opencv_features2d2410.lib;opencv_flann2410.lib;opencv_gpu2410.lib;opencv_highgui2410.lib;opencv_imgproc2410.lib;opencv_legacy2410.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetPath)" "..\Execute\$(Configuration)\"</Command>

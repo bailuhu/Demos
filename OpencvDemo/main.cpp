@@ -1170,11 +1170,14 @@ int main(int argc, char *argv[])
 
 // 		EdgeDetect_Sobel(filePathR, filePathW);
 // 		EdgeDetect_Canny(filePathR, filePathW);
-//		Find_HW_X(filePathR, filePathW);
+
 // 		OC_Test_MV_3(filePathR, filePathW);
 // 		OC_Test_MV_2(filePathR, filePathW);
+		OC_Test_MV_4(filePathR, filePathW);
+//		Find_HW_X(filePathR, filePathW);
 // 		Find_HW_Y(filePathR, filePathW);
- 		Find_HW_XY(filePathR, filePathW);
+// 		Find_HW_XY(filePathR, filePathW);
+//		Find_HW_XY_2(filePathR, filePathW);
 // 		OC_Test_HW_3(filePathR, filePathW);
 // 		OC_Test_HW_4(filePathR, filePathW);
 // 		OC_Test_HW_1(filePathR, filePathW);
@@ -1186,7 +1189,7 @@ int main(int argc, char *argv[])
 
 //		HarrisDectect_1(filePathR, filePathW);
 	}
-
+//	system("pause");
 
 	return 0;
 

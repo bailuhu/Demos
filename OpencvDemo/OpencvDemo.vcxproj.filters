@@ -28,13 +28,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GeneratedFiles\qrc_AA_Single.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QDlgMain.cpp">
+    <ClCompile Include="GeneratedFiles\qrc_OpencvDemo.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_QDlgMain.cpp">
@@ -43,20 +37,18 @@
     <ClCompile Include="GeneratedFiles\Release\moc_QDlgMain.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalFunction.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
+    <ClCompile Include="GlobalFunction.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="QDlgMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="AA_Single.qrc">
+    <CustomBuild Include="OpencvDemo.qrc">
       <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="QDlgMain.h">
-      <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="QDlgMain.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="QDlgMain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\resource.h">
@@ -68,11 +60,11 @@
     <ClInclude Include="Huawei\dfspottestapi.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalFunction.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
+    <ClInclude Include="GlobalFunction.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="AA_Single.rc" />
+    <ResourceCompile Include="OpencvDemo.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -13,17 +13,17 @@ QT_BEGIN_NAMESPACE
 QT_END_NAMESPACE
 
 
-int QT_MANGLE_NAMESPACE(qInitResources_AA_Single)()
+int QT_MANGLE_NAMESPACE(qInitResources_OpencvDemo)()
 {
     return 1;
 }
 
-Q_CONSTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qInitResources_AA_Single))
+Q_CONSTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qInitResources_OpencvDemo))
 
-int QT_MANGLE_NAMESPACE(qCleanupResources_AA_Single)()
+int QT_MANGLE_NAMESPACE(qCleanupResources_OpencvDemo)()
 {
     return 1;
 }
 
-Q_DESTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qCleanupResources_AA_Single))
+Q_DESTRUCTOR_FUNCTION(QT_MANGLE_NAMESPACE(qCleanupResources_OpencvDemo))
 

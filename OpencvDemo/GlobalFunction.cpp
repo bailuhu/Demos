@@ -13,14 +13,14 @@ void TraverseDir(QString dirPath, QString filter, vector<QString>& vFilePath)
 			
 			if (fileInfo.suffix() == filter)
 			{
-				qDebug()<< "File: " << fileInfo.filePath();
+				qDebug()<< "Find file:" << fileInfo.filePath();
 				vFilePath.push_back(fileInfo.filePath());
 			}
 		}
 		else  
 		{  
 			if(fileInfo.fileName() == "." || fileInfo.fileName() == "..") continue;  
-			qDebug() << "Dir: " << fileInfo.absoluteFilePath();
+			qDebug() << "Find Dir:" << fileInfo.absoluteFilePath();
 			TraverseDir(fileInfo.absoluteFilePath(), filter, vFilePath);
 		}  
 	}  

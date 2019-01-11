@@ -26,7 +26,7 @@ public:
     {
         if (QDlgMain->objectName().isEmpty())
             QDlgMain->setObjectName(QStringLiteral("QDlgMain"));
-        QDlgMain->resize(1920, 1033);
+        QDlgMain->resize(394, 263);
         QDlgMain->setStyleSheet(QLatin1String("QGroupBox{\n"
 "border-style: solid;\n"
 "border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.170455 rgba(188, 157, 225, 255), stop:0.375 rgba(71, 114, 193, 255), stop:0.585227 rgba(32, 34, 130, 255), stop:0.784091 rgba(115, 107, 177, 255));\n"

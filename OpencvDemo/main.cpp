@@ -5,232 +5,90 @@
 
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 using namespace cv;
 using namespace std;
-//全局变量
-Mat src1, src1_gray,
-	src2, src2_gray;
-int maxCorners = 23;
-int maxTrackbar = 100;
-double qualityLevel = 0.01;//最小特征值小于qualityLevel*最大特征值的点将被忽略
-int blockSize = 3;//邻域尺寸
-double minDistance = 10;//两角点间最小距离
-char* source_window1 = "src1";
-char* source_window2 = "src2";
-void goodFeaturesToTrack_Demo( int, void* )
-{
-	//参数初始化
-	if(maxCorners < 1)//允许返回的最多角点个数
-		maxCorners = 1;
-	vector<Point2f> corners1,corners2;//角点容器
-	
-	
-
-	bool useHarrisDetector = false;//是否使用Harris
-	double k = 0.04;
-	//拷贝原图
-	Mat src1_copy = src1.clone();
-	//调用函数进行Shi-Tomasi角点检测
-	goodFeaturesToTrack( src1_gray,
-		corners1,
-		maxCorners,
-		qualityLevel,
-		minDistance,
-		Mat(),
-		blockSize,
-		useHarrisDetector,
-		k );
-	goodFeaturesToTrack( src2_gray,
-		corners2,
-		maxCorners,
-		qualityLevel,
-		minDistance,
-		Mat(),
-		blockSize,
-		useHarrisDetector,
-		k );
-	//画出角点
-	cout<<"角点个数："<<corners1.size()<<endl;//等于maxCorners
-	for( int i = 0; i < corners1.size(); i++ )
+                                                                                               
+int main(int argc, char *argv[])                                                                             
+{               
+	Mat srcImg;
+	Mat dstImg;
+	for (int i = 0; i < 5; i++)
 	{
-		circle( src1_copy, corners1[i], 4, Scalar(0,255,0),2);
-	}
-	//显示图像
-	imshow( source_window1, src1_copy );
-}
-// int main()
-// {
-// 	//加载源图并转换为灰度图
-// 	src1 = imread("E:/Test/1.bmp");
-// 	cvtColor( src1, src1_gray, CV_BGR2GRAY );
-// 	//创建窗口
-// 	namedWindow( source_window1, CV_WINDOW_AUTOSIZE );
-// 	//创建滑块条，调节允许的角点个数
-// 	createTrackbar( "BlockSize:", source_window1, &blockSize, maxTrackbar, goodFeaturesToTrack_Demo );
-// 	createTrackbar( "MaxCorner:", source_window1, &maxCorners, maxTrackbar, goodFeaturesToTrack_Demo );
-// 	goodFeaturesToTrack_Demo( 0, 0 );
-// 	waitKey(0);
-// 	return(0);
-// }
+		QString szTemp = QStringLiteral("E:\\Log\\RoiBlockImage\\RoiOld%1.bmp").arg(i);
+		QString szTemp2 = QStringLiteral("E:\\Log\\RoiBlockImage\\%1.bmp").arg(i);
+	
+		srcImg = imread(szTemp.toStdString());
+	//	imshow("src", srcImg);
+		dstImg = srcImg.clone();
+	//	GaussianBlur(srcImg, srcImg, Size(3, 3), 0, 0);
+	//	cvtColor(srcImg, srcImg, CV_BGR2GRAY);
+	//	Canny(srcImg, srcImg, 100, 200);//因为原图比较复杂，所以需要将canny的值调大，去除不想要的成分
+		//threshold(srcImg, srcImg, 100, 255, CV_THRESH_BINARY_INV); //二值化也可以实现canny效果,不过在本例中杂絮较多
+	//	imshow("canny", srcImg);
+	// 	Mat element = getStructuringElement(MORPH_RECT, Size(11, 11), Point(-1, -1)); //定义结构元素
+	// 	dilate(srcImg, srcImg, element); //膨胀
+	// 	imshow("dilate", srcImg);
+	// 	erode(srcImg, srcImg, element);
+	// 	imshow("erode", srcImg);
 
-
-
-int main(int argc, char *argv[])
-{
-#if 1
-
-// 单张图调试参数
-// 	//加载源图并转换为灰度图
-// 	src1 = imread("E:/Test/2.bmp");
-// 	cvtColor( src1, src1_gray, CV_BGR2GRAY );
-// 	//创建窗口
-// 	namedWindow( source_window1, CV_WINDOW_AUTOSIZE );
-// 	//创建滑块条，调节允许的角点个数
-// 	createTrackbar( "BlockSize:", source_window1, &blockSize, maxTrackbar, goodFeaturesToTrack_Demo );
-// 	createTrackbar( "MaxCorner:", source_window1, &maxCorners, maxTrackbar, goodFeaturesToTrack_Demo );
-// 	goodFeaturesToTrack_Demo( 0, 0 );
-// 	waitKey(0);
-// 	return(0);
-	QString temp;
-	for (int n = 1; n <= 15; n++)
-	{
-		// 图像相减
-		temp = QString::fromLatin1("E:/Test/%1/yyy.bmp").arg(n);
-		Mat img1 = imread(temp.toStdString().c_str()); 
-		temp = QString::fromLatin1("E:/Test/%1/jjj.bmp").arg(n);
-		Mat img2 = imread(temp.toStdString().c_str());
-// 		GaussianBlur( img1, img1, Size(3,3), 1, 1, BORDER_DEFAULT );
-// 		GaussianBlur( img2, img2, Size(3,3), 1, 1, BORDER_DEFAULT );
-		Mat image = img1 - img2;
-		//bitwise_and(img1,img2, image);//逻辑与，求交集
-		//bitwise_or(img1,img2,image);//逻辑或，求并集
-		//bitwise_not(img1,image);//逻辑非，求补集
-		//bitwise_xor(img1,image,image);//异或，相同为0，相异为1
-		for (int i = 0; i < image.rows; i++)
+		vector<vector<Point>> contours;
+		vector<Vec4i> hierarcy;
+		findContours(srcImg, contours, hierarcy, CV_RETR_TREE, CV_CHAIN_APPROX_NONE);
+		vector<Rect> boundRect(contours.size());
+		vector<RotatedRect> box(contours.size());
+		Point2f rect[4];
+		for(int i=0; i<contours.size(); i++)
 		{
-			for (int j = 0; j < image.cols; j++)
-			{
-				int b = abs(img1.at<Vec3b>(i, j)[0] - img2.at<Vec3b>(i, j)[0]);
-				int g = abs(img1.at<Vec3b>(i, j)[1] - img2.at<Vec3b>(i, j)[1]);
-				int r = abs(img1.at<Vec3b>(i, j)[2] - img2.at<Vec3b>(i, j)[2]);
-				
-				int x = 150;
-				if ((b) > x)
-				{
-					image.at<Vec3b>(i, j)[0] = img2.at<Vec3b>(i, j)[0];
-					image.at<Vec3b>(i, j)[1] = img2.at<Vec3b>(i, j)[1];
-					image.at<Vec3b>(i, j)[2] = img2.at<Vec3b>(i, j)[2];
-					image.at<Vec3b>(i, j)[0] = b - img1.at<Vec3b>(i, j)[0];
-					image.at<Vec3b>(i, j)[1] = g - img1.at<Vec3b>(i, j)[1];
-					image.at<Vec3b>(i, j)[2] = r - img1.at<Vec3b>(i, j)[2];
-					image.at<Vec3b>(i, j)[0] = x;
-					image.at<Vec3b>(i, j)[1] = x;
-					image.at<Vec3b>(i, j)[2] = x;
-				}
-				else
-				{
-					image.at<Vec3b>(i, j)[0] = (b);
-					image.at<Vec3b>(i, j)[1] = (g);
-					image.at<Vec3b>(i, j)[2] = (r);
-				}
-			}
+			box[i] = minAreaRect(Mat(contours[i]));    
+			boundRect[i] = boundingRect(Mat(contours[i]));
+
+			if(box[i].size.width < 30 || box[i].size.height<30)//筛选
+				continue;
+			if(box[i].size.width > 60 || box[i].size.height>60)//筛选
+				continue;
+			rectangle(dstImg, Point(boundRect[i].x, boundRect[i].y), Point(boundRect[i].x + boundRect[i].width, boundRect[i].y + boundRect[i].height), Scalar(0, 255, 0), 1, 8);
+	// 		circle(dstImg, Point(box[i].center.x, box[i].center.y), 1, Scalar(0, 255, 0), 1, 8);
+	// 		box[i].points(rect);        
+	// 		for(int j=0; j<4; j++)
+	// 		{
+	// 			line(dstImg, rect[j], rect[(j+1)%4], Scalar(0, 0, 255), 1, 8);
+	// 		}
+
+			float angle;
+			cout<<"angle="<<box[i].angle<<endl;
+			angle = box[i].angle;
+			char width[20], height[20];     
+			sprintf(width, "width=%0.2f", box[i].size.width);
+			sprintf(height, "height=%0.2f", box[i].size.height);
+			putText(dstImg, width, Point(195, 260), CV_FONT_HERSHEY_COMPLEX_SMALL, 0.85, Scalar(0, 255, 0));
+			putText(dstImg, height, Point(190, 285), CV_FONT_HERSHEY_COMPLEX_SMALL, 0.85, Scalar(0, 255, 0));
+			//imshow("temp", dstImg);
+
+	// 		//利用仿射变换进行旋转        另一种方法，透视变换
+	// 		if (0< abs(angle) && abs(angle)<=45)  
+	// 			angle = angle;//负数，顺时针旋转
+	// 		else if (45< abs(angle) && abs(angle)<90) 
+	// 			angle = 90 -  abs(angle);//正数，逆时针旋转
+	// 		Point2f center = box[i].center;  //定义旋转中心坐标
+	// 		double angle0 = angle;
+	// 		double scale = 1;
+	// 		Mat roateM = getRotationMatrix2D(center, angle0, scale);  //获得旋转矩阵,顺时针为负，逆时针为正
+	// 		warpAffine(dstImg, dstImg, roateM, dstImg.size()); //仿射变换
+
+			//保存二维码
+			int x0=0, y0=0, w0=0, h0=0;
+			x0 = boundRect[i].x-2; 
+			y0 = boundRect[i].y-2; 
+			w0 = boundRect[i].width+4; 
+			h0 = boundRect[i].height+4; 
+			Mat ROI = dstImg(Rect(x0, y0, w0, h0));
+			imwrite(szTemp2.toStdString(), ROI);
 		}
-		//GaussianBlur( image, image, Size(5,5), 0, 0, BORDER_DEFAULT );
-		//threshold(image, image, 10, 255, THRESH_BINARY);
-		temp = QString::fromLatin1("E:/Test/%1_GlueShap.bmp").arg(n);
-		imwrite(temp.toStdString().c_str(), image);
-		qDebug() << temp.toStdString().c_str();
-		continue;
-
-		// 图像增强
-		Mat imageGamma(image.size(), CV_32FC3);
-		for (int i = 0; i < image.rows; i++)
-		{
-			for (int j = 0; j < image.cols; j++)
-			{
-				imageGamma.at<Vec3f>(i, j)[0] = log(1 + image.at<Vec3b>(i, j)[0]);
-				imageGamma.at<Vec3f>(i, j)[1] = log(1 + image.at<Vec3b>(i, j)[1]);
-				imageGamma.at<Vec3f>(i, j)[2] = log(1 + image.at<Vec3b>(i, j)[2]);
-
-// 				imageGamma.at<Vec3f>(i, j)[0] = image.at<Vec3b>(i, j)[0];
-// 				imageGamma.at<Vec3f>(i, j)[1] = image.at<Vec3b>(i, j)[1];
-// 				imageGamma.at<Vec3f>(i, j)[2] = image.at<Vec3b>(i, j)[2];
-
-			}
-		}
-		//归一化到0~255  
-		normalize(imageGamma, imageGamma, 0, 255, CV_MINMAX);
-		//转换成8bit图像显示  
-		convertScaleAbs(imageGamma, imageGamma);
-
-		//imshow("image2", imageGamma);
-		temp = QString::fromLatin1("E:/Test/%1_GlueShap.bmp").arg(n);
-		imwrite(temp.toStdString().c_str(), imageGamma);
-		qDebug() << temp.toStdString().c_str();
 	}
-	
-	waitKey();
-	return 0;
-#else
-// 多张图直接执行
-
-	vector<QString> vFilePath;
-	QString filePathW;
-	QString test = "E:/Test";
-	QString testResult = "E:/Test_Result";
-//	QString testResult = "E:/Test";
-	TraverseDir(test, "GlueShap.bmp", vFilePath);
-	qDebug() << "Traverse directory files done.";
-
-	for (vector<QString>::iterator it = vFilePath.begin(); it != vFilePath.end(); ++it)
-	{
-		QString filePathR = *it;
-		QString filePathW = filePathR;
-		filePathW.replace(test, testResult);
-
-		QString dirPath = filePathW.left(filePathW.lastIndexOf("/"));
-		CreateDir(dirPath);
-
-//		goodFeaturesToTrack_Demo(filePathR, filePathW);
-// 		EdgeDetect_Sobel(filePathR, filePathW);
-// 		EdgeDetect_Canny(filePathR, filePathW);
-		EdgeDetect_Contour(filePathR, filePathW);
-//		GrabCutImge(filePathR, filePathW);
-
-// 		OC_Test_MV_3(filePathR, filePathW);
-// 		OC_Test_MV_2(filePathR, filePathW);
-//		OC_Test_MV_4(filePathR, filePathW);
-//		Find_HW_X(filePathR, filePathW);
-// 		Find_HW_Y(filePathR, filePathW);
-// 		Find_HW_XY(filePathR, filePathW);
-//		Find_HW_XY_2(filePathR, filePathW);
-// 		OC_Test_HW_3(filePathR, filePathW);
-// 		OC_Test_HW_4(filePathR, filePathW);
-// 		OC_Test_HW_1(filePathR, filePathW);
-
-// 		MophologyOpenClose(filePathR, filePathW);
-// 		LineDetect_NoName(filePathR, filePathW);
-// 		LineDetect_HT(filePathR, filePathW);
-//		Mophology_WaterShed(filePathR, filePathW);
-
-//		HarrisDectect_1(filePathR, filePathW);
-//		FindCircle(filePathR, filePathW);
-	}
-//	system("pause");
-
-	return 0;
-
-#endif
-
-	QApplication a(argc, argv);		
-	a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
-
-	QDlgMain dlg;
-	dlg.show();
-	a.exec();
-
-	return 0;
-}
+	imshow("dst", dstImg);
+	waitKey(0);
+}  

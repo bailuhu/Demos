@@ -4,13 +4,13 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QTDIR>D:\Program\Qt\x64\5.2.1\msvc2012_64</QTDIR>
+    <QTDIR>D:\Program\Qt\Qt5.2.1_x64\5.2.1\msvc2012_64</QTDIR>
     <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
     <LocalDebuggerCommand>..\Execute\$(Configuration)\$(TargetName).exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <QTDIR>D:\Program\Qt\x64\5.2.1\msvc2012_64</QTDIR>
+    <QTDIR>D:\Program\Qt\Qt5.2.1_x64\5.2.1\msvc2012_64</QTDIR>
     <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
     <LocalDebuggerCommand>..\Execute\$(Configuration)\$(TargetName).exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>

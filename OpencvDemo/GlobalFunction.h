@@ -43,3 +43,6 @@ Point OC_Test_MV_3(QString filePathR, QString filePathW);
 
 Point FindCircle(QString filePathR, QString filePathW);
 bool SubStrateImg(QString filePathR1, QString filePathR2, QString filePathW);
+
+void drawSquares( IplImage* img, CvSeq* squares ,const char* wndname);
+CvSeq* findSquares4( IplImage* img, CvMemStorage* storage ,int minarea, int maxarea, int minangle, int maxangle);

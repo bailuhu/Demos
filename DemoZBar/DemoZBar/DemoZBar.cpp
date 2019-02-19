@@ -6,12 +6,12 @@
 #include <iostream>
 using namespace std;
 //ZBar
-#include <D:\\Program\\ZBar\\include\\zbar.h>
-#pragma comment(lib, "D:\\Program\\ZBar\\lib\\libzbar-0.lib")
+#include <D:\\ProgramFiles\\ZBar\\include\\zbar.h>
+#pragma comment(lib, "D:\\ProgramFiles\\ZBar\\lib\\libzbar-0.lib")
 using namespace zbar;
 
 #include <opencv.hpp>
-#include <highgui.hpp>
+#include <highgui/highgui.hpp>
 using namespace cv;
 
 int _tmain(int argc, _TCHAR* argv[])

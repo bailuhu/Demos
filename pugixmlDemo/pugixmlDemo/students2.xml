@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Students>
-	<!--Students!-->
-	<Student id="1">
-		<Name>MaZhe</Name>
-		<Age></Age>
-	</Student>
-	<Student id="2">
-		<Name>Miki</Name>
-		<Age></Age>
-	</Student>
-	<Student id="3">
-		<Name>Maki</Name>
-		<Age></Age>
-	</Student>
-</Students>
+<ListSockMsg>
+	<!--ListSockMsg Comment-->
+	<MsgName TestData="test data101" ErrInfo="error101" Result="-1" Status="-1" CmdID="101" />
+	<MsgName TestData="test data001" ErrInfo="error001" Result="-1" Status="11" CmdID="1" />
+	<MsgName TestData="test data102" ErrInfo="error102" Result="-1" Status="-1" CmdID="102" />
+</ListSockMsg>

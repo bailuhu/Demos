@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ListSockMsg>
 	<!--ListSockMsg Comment-->
-	<MsgName TestData="test data101" ErrInfo="error101" Result="-1" Status="-1" CmdID="101" />
-	<MsgName TestData="test data001" ErrInfo="error001" Result="-1" Status="11" CmdID="1" />
-	<MsgName TestData="test data102" ErrInfo="error102" Result="-1" Status="-1" CmdID="102" />
+	<MsgName CmdID="101" Status="-1" Result="-1" ErrInfo="error101" TestData="test data101" />
+	<MsgName CmdID="1" Status="11" Result="-1" ErrInfo="error001" TestData="test data001" />
+	<MsgName CmdID="102" Status="-1" Result="-1" ErrInfo="error102" TestData="test data102" />
 </ListSockMsg>

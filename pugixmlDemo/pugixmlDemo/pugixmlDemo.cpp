@@ -69,16 +69,20 @@ void WriteListSockMsg(std::list<SockMsg>& listSockMsg)
 		pugi::xml_node xstudent = xstudents.append_child("MsgName");
 
 		// add attribute
-		pugi::xml_attribute xstudent_TestData = xstudent.append_attribute("TestData");
-		xstudent_TestData.set_value(msg.TestData);
-		pugi::xml_attribute xstudent_ErrInfo = xstudent.append_attribute("ErrInfo");
-		xstudent_ErrInfo.set_value(msg.ErrInfo);
-		pugi::xml_attribute xstudent_Result = xstudent.append_attribute("Result");
-		xstudent_Result.set_value(msg.Result);
-		pugi::xml_attribute xstudent_Status = xstudent.append_attribute("Status");
-		xstudent_Status.set_value(msg.Status);
 		pugi::xml_attribute xstudent_CmdID = xstudent.append_attribute("CmdID");
 		xstudent_CmdID.set_value(msg.CmdID);
+		pugi::xml_attribute xstudent_Status = xstudent.append_attribute("Status");
+		xstudent_Status.set_value(msg.Status);
+		pugi::xml_attribute xstudent_Result = xstudent.append_attribute("Result");
+		xstudent_Result.set_value(msg.Result);
+		pugi::xml_attribute xstudent_ErrInfo = xstudent.append_attribute("ErrInfo");
+		xstudent_ErrInfo.set_value(msg.ErrInfo);
+		pugi::xml_attribute xstudent_TestData = xstudent.append_attribute("TestData");
+		xstudent_TestData.set_value(msg.TestData);
+
+
+
+
 
 		// add child
 // 		char temp[256] = { 0 };

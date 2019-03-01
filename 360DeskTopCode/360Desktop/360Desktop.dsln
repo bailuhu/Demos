@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DirectUI>
+    <SlnInfo Name="360Desktop" Author="" Company="" CreateDate="" Path="E:\angaojie\workspace\360Desktop.dsln" />
+    <Dui>
+        <Guid95B77CEE164846F5A313F341FE52B61E DuiName="360Desktop" DuiPath="E:\angaojie\workspace\360Desktop.dui">
+            <Guid4634B353947547628E015FC3478D2F8B SknName="Default" SknPath="E:\angaojie\workspace\Default.skn" />
+        </Guid95B77CEE164846F5A313F341FE52B61E>
+    </Dui>
+</DirectUI>

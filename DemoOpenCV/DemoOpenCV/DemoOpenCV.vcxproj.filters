@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="OpenCV教程-基础篇">
+      <UniqueIdentifier>{6f06ed5a-ebff-47f5-9f70-bce06df1e5fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenCV2计算机视觉编程手册">
+      <UniqueIdentifier>{137d6110-761f-4a70-b3a0-bc251f91865c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Learning OpenCV">
+      <UniqueIdentifier>{40a5290f-0db5-4024-8241-6fc4be67d1c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalFunc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoOpenCV.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="example1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="example2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="example3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="example4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalFunc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-5.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-6.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-7.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Example2-11.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-1 edge.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-2 corner.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-3 rotate.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-4 log-polar.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-6 filter.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-5 morphology.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-7 filldemo.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-8 motiondetect.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-9 pyramid_segmentation.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-10 imadjust.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-11 imhist.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-12 hue.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example3-2 invImage.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example3-3 convert.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example3-4 drawing.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example4-1 cvmatop.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example4-2 dft.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example5-24 haarcascade.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV2计算机视觉编程手册\2.2 salt.cpp">
+      <Filter>OpenCV2计算机视觉编程手册</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV2计算机视觉编程手册\2.3 colorReduce.cpp">
+      <Filter>OpenCV2计算机视觉编程手册</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV2计算机视觉编程手册\addImages.cpp">
+      <Filter>OpenCV2计算机视觉编程手册</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example2-1 hello.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenCV教程-基础篇\Example3-1 cvmat.cpp">
+      <Filter>OpenCV教程-基础篇</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gary Bradski_学习OpenCV（源码）\ch11_ex11_1.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch8_ex8_3.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch2_ex2_1.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch2_ex2_2.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch2_ex2_6.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch2_ex2_7.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch2_ex2_8.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch2_ex2_9.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch3_ex3_14.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch3_ex3_4.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch4_ex4_1.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch4_ex4_3.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch5_ex5_1.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch5_ex5_2.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch5_ex5_3.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch5_ex5_4.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch6_ex6_1.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch6_ex6_2.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch6_ex6_3.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch6_ex6_4.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch6_ex6_5.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+    <ClCompile Include="ch8_ex8_2.cpp">
+      <Filter>Learning OpenCV</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

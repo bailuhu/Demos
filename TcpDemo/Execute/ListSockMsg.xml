@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListSockMsg>
+	<!--ListSockMsg Comment-->
+	<MsgName CmdID="101" Status="-1" Result="-1" ErrInfo="error101" TestData="test data101" />
+	<MsgName CmdID="1" Status="11" Result="-1" ErrInfo="error001" TestData="test data001" />
+	<MsgName CmdID="2" Status="11" Result="-1" ErrInfo="error001" TestData="test data001" />
+	<MsgName CmdID="102" Status="-1" Result="-1" ErrInfo="error102" TestData="test data102" />
+</ListSockMsg>
